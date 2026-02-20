@@ -1,0 +1,77 @@
+{
+  "common": {
+    "hotkey": {
+      "focusInscription": "Focus Inscription ({{hotkey}})",
+      "focusMain": "Focus Main ({{hotkey}})",
+      "focusToolbar": "Focus Toolbar ({{hotkey}})",
+      "help": "Open Help ({{hotkey}})",
+      "redo": "Redo ({{hotkey}})",
+      "undo": "Undo ({{hotkey}})"
+    },
+    "label": {
+      "apply": "Apply",
+      "authentication": "Authentication",
+      "browser": "Browser",
+      "cancel": "Cancel",
+      "description": "Description",
+      "details": "Details",
+      "features": "Features",
+      "icon": "Icon",
+      "id": "ID",
+      "info": "Info",
+      "name": "Name",
+      "password": "Password",
+      "path": "Path",
+      "properties": "Properties",
+      "search": "Search",
+      "text": "Text",
+      "type": "Type",
+      "uri": "URI",
+      "username": "Username",
+      "value": "Value"
+    },
+    "message": {
+      "errorOccurred": "An error has occurred: {{message}}"
+    }
+  },
+  "dialog": {
+    "addWebService": {
+      "desc": "Add a new Web Service configuration.",
+      "title": "Add Web Service"
+    },
+    "browser": {
+      "description": "Browse available options.",
+      "loadError": "Couldn't load browser data",
+      "loading": "Loading...",
+      "title": "Browser"
+    },
+    "create": "Create",
+    "createTooltip": "Hold {{modifier}} to add an additional Web Service."
+  },
+  "hotkey": {
+    "addWebService": "Add Web Service ({{hotkey}})",
+    "deleteWebService": "Delete Web Service ({{hotkey}})"
+  },
+  "label": {
+    "authentication": {
+      "basic": "Basic",
+      "digest": "Digest",
+      "none": "None",
+      "ntlm": "NTLM"
+    },
+    "noWebServiceSelected": "No Web Service Selected",
+    "removeRow": "Remove Row",
+    "webServices": "Web Services"
+  },
+  "message": {
+    "addFirstWebService": "Add your first Web Service to get started.",
+    "emptyName": "Name cannot be empty.",
+    "errorOnly": "Error: {{error}}",
+    "notFound": "Not Found",
+    "webserviceAlreadyExists": "Web Service already exists."
+  },
+  "title": {
+    "detail": "Web Service",
+    "main": "Web Services - {{name}}"
+  }
+}

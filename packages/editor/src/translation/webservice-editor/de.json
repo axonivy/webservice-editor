@@ -1,0 +1,77 @@
+{
+  "common": {
+    "hotkey": {
+      "focusInscription": "Fokus Detailansicht ({{hotkey}})",
+      "focusMain": "Fokus Hauptansicht ({{hotkey}})",
+      "focusToolbar": "Fokus Toolbar ({{hotkey}})",
+      "help": "Hilfe öffnen ({{hotkey}})",
+      "redo": "Wiederholen ({{hotkey}})",
+      "undo": "Rückgängig ({{hotkey}})"
+    },
+    "label": {
+      "apply": "Anwenden",
+      "authentication": "Authentifizierung",
+      "browser": "Browser",
+      "cancel": "Abbrechen",
+      "description": "Beschreibung",
+      "details": "Details",
+      "features": "Funktionen",
+      "icon": "Symbol",
+      "id": "ID",
+      "info": "Info",
+      "name": "Name",
+      "password": "Passwort",
+      "path": "Pfad",
+      "properties": "Eigenschaften",
+      "search": "Suchen",
+      "text": "Text",
+      "type": "Typ",
+      "uri": "URI",
+      "username": "Benutzername",
+      "value": "Wert"
+    },
+    "message": {
+      "errorOccurred": "Ein Fehler ist aufgetreten: {{message}}"
+    }
+  },
+  "dialog": {
+    "addWebService": {
+      "desc": "Fügen Sie eine neue Web Service Konfiguration hinzu.",
+      "title": "Web Service hinzufügen"
+    },
+    "browser": {
+      "description": "Durchsuchen Sie verfügbare Optionen.",
+      "loadError": "Konnte Browser-Daten nicht laden",
+      "loading": "Lädt...",
+      "title": "Browser"
+    },
+    "create": "Erstellen",
+    "createTooltip": "Halte {{modifier}} gedrückt, um einen weiteren Web Service hinzuzufügen."
+  },
+  "hotkey": {
+    "addWebService": "Web Service hinzufügen ({{hotkey}})",
+    "deleteWebService": "Web Service löschen ({{hotkey}})"
+  },
+  "label": {
+    "authentication": {
+      "basic": "Basic",
+      "digest": "Digest",
+      "none": "Keine",
+      "ntlm": "NTLM"
+    },
+    "noWebServiceSelected": "Kein Web Service ausgewählt",
+    "removeRow": "Zeile entfernen",
+    "webServices": "Web Services"
+  },
+  "message": {
+    "addFirstWebService": "Fügen Sie Ihren ersten Web Service hinzu, um zu beginnen.",
+    "emptyName": "Name darf nicht leer sein.",
+    "errorOnly": "Fehler: {{error}}",
+    "notFound": "Nicht gefunden",
+    "webserviceAlreadyExists": "Web Service existiert bereits."
+  },
+  "title": {
+    "detail": "Web Service",
+    "main": "Web Services - {{name}}"
+  }
+}

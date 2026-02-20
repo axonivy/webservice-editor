@@ -1,0 +1,10 @@
+import type { ValidationResult } from '@axonivy/webservice-editor-protocol';
+import { useAppContext } from '../context/AppContext';
+
+export function useValidations(path: string): ValidationResult[] {
+  const { validations } = useAppContext();
+  if (path === '') {
+    return [];
+  }
+  return validations.filter(val => val.path?.startsWith(path));
+}
