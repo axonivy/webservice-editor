@@ -1,5 +1,5 @@
-import type { WebServiceData, Severity, ValidationResult } from '@axonivy/webservice-editor-protocol';
 import { BasicCollapsible, BasicField, BasicInput, Flex, PanelMessage, type MessageData } from '@axonivy/ui-components';
+import type { Severity, ValidationResult, WebServiceData } from '@axonivy/webservice-editor-protocol';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAppContext } from '../../context/AppContext';
@@ -27,9 +27,18 @@ export const DetailContent = () => {
       return structuredClone(old);
     });
 
+  const handleUriChange = (value: string) =>
+    setData(old => {
+      const oldWebservice = old[selectedIndex];
+      const firstPort = oldWebservice?.service.ports[0];
+      if (firstPort) {
+        firstPort.locationUri = value;
+      }
+      return structuredClone(old);
+    });
+
   const idMessage = fieldMessage(validations, webservice.name, 'id');
   const nameMessage = fieldMessage(validations, webservice.name, 'name');
-  const uriMessage = fieldMessage(validations, webservice.name, 'uri');
 
   return (
     <Flex direction='column' gap={3} className='webservice-editor-detail-content'>
@@ -50,8 +59,8 @@ export const DetailContent = () => {
           <BasicField label={t('common.label.icon')}>
             <BasicInput value={webservice.icon} onChange={event => handleAttributeChange('icon', event.target.value)} />
           </BasicField>
-          <BasicField label={t('common.label.uri')} message={uriMessage}>
-            <BasicInput value={webservice.uri} onChange={event => handleAttributeChange('uri', event.target.value)} />
+          <BasicField label={t('common.label.uri')}>
+            <BasicInput value={webservice.service.ports[0]?.locationUri ?? ''} onChange={event => handleUriChange(event.target.value)} />
           </BasicField>
         </Flex>
       </BasicCollapsible>

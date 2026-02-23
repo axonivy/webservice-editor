@@ -19,7 +19,7 @@ test('edit details', async ({ page }) => {
   await expect(editor.detail.name.locator).toHaveValue('personService');
   await expect(editor.detail.description).toBeEmpty();
   await expect(editor.detail.icon).toBeEmpty();
-  await expect(editor.detail.uri.locator).toHaveValue('{ivy.app.baseurl}/api/persons');
+  await expect(editor.detail.uri.locator).toHaveValue('{ivy.app.baseurl}/ws/connectivity-demos/16150E1D07E8CA18');
 
   await editor.detail.name.locator.fill('Updated service');
   await editor.detail.description.fill('desc');
@@ -39,39 +39,36 @@ test('edit authentication type', async ({ page }) => {
   await editor.detail.authSection.open();
   await editor.detail.authenticationType.expectSelected('Basic');
   await editor.detail.featuresSection.open();
-  await editor.detail.features.expectToHaveRowCount(2);
-  await editor.detail.features.expectToHaveRowValues(
-    ['ch.ivyteam.ivy.rest.client.authentication.HttpBasicAuthenticationFeature'],
-    ['ch.ivyteam.ivy.rest.client.mapper.JsonFeature']
-  );
+  await editor.detail.features.expectToHaveRowCount(1);
+  await editor.detail.features.expectToHaveRowValues(['ch.ivyteam.ivy.webservice.exec.cxf.feature.HttpBasicAuthenticationFeature']);
 
   await editor.detail.authenticationType.choose('Digest');
-  await editor.detail.features.expectToHaveRowCount(2);
-  await editor.detail.features.expectToHaveRowValues(
-    ['ch.ivyteam.ivy.rest.client.mapper.JsonFeature'],
-    ['ch.ivyteam.ivy.rest.client.authentication.HttpDigestAuthenticationFeature']
-  );
+  await editor.detail.features.expectToHaveRowCount(1);
+  await editor.detail.features.expectToHaveRowValues(['ch.ivyteam.ivy.webservice.exec.cxf.feature.HttpDigestAuthenticationFeature']);
 
   await editor.detail.authenticationType.choose('NTLM');
-  await editor.detail.features.expectToHaveRowCount(2);
-  await editor.detail.features.expectToHaveRowValues(['ch.ivyteam.ivy.rest.client.mapper.JsonFeature'], ['ch.ivyteam.ivy.rest.client.authentication.NtlmAuthenticationFeature']);
+  await editor.detail.features.expectToHaveRowCount(1);
+  await editor.detail.features.expectToHaveRowValues(['ch.ivyteam.ivy.webservice.exec.cxf.feature.NTLMAuthenticationFeature']);
+
+  await editor.detail.authenticationType.choose('WS Security');
+  await editor.detail.features.expectToHaveRowCount(1);
+  await editor.detail.features.expectToHaveRowValues(['ch.ivyteam.ivy.webservice.exec.cxf.feature.WSSecurityAuthenticationFeature']);
 
   await editor.detail.authenticationType.choose('None');
-  await editor.detail.features.expectToHaveRowCount(1);
-  await editor.detail.features.expectToHaveRowValues(['ch.ivyteam.ivy.rest.client.mapper.JsonFeature']);
+  await editor.detail.features.expectToHaveRowCount(0);
 });
 
 test('edit authentication properties', async ({ page }) => {
   const editor = await WebServiceEditor.openMock(page);
   await editor.main.table.row(0).locator.click();
   await editor.detail.authSection.open();
-  await expect(editor.detail.username).toHaveValue('theWorker');
-  await expect(editor.detail.password).toHaveValue('theWorker');
+  await expect(editor.detail.username).toHaveValue('theBoss');
+  await expect(editor.detail.password).toHaveValue('theBoss');
   await editor.detail.propertiesSection.open();
-  await editor.detail.properties.expectToHaveRowValues(['Text', 'username', 'theWorker'], ['Password', 'password', 'theWorker']);
+  await editor.detail.properties.expectToHaveRowValues(['Text', 'username', 'theBoss'], ['Password', 'password', 'theBoss']);
 
   await editor.detail.username.fill('newUser');
-  await editor.detail.properties.expectToHaveRowValues(['Text', 'username', 'newUser'], ['Password', 'password', 'theWorker']);
+  await editor.detail.properties.expectToHaveRowValues(['Text', 'username', 'newUser'], ['Password', 'password', 'theBoss']);
 
   await editor.detail.password.fill('newPass');
   await editor.detail.properties.expectToHaveRowValues(['Text', 'username', 'newUser'], ['Password', 'password', 'newPass']);
@@ -90,37 +87,33 @@ test('edit features', async ({ page }) => {
   const editor = await WebServiceEditor.openMock(page);
   await editor.main.table.row(0).locator.click();
   await editor.detail.featuresSection.open();
-  await editor.detail.features.expectToHaveRowValues(
-    ['ch.ivyteam.ivy.rest.client.authentication.HttpBasicAuthenticationFeature'],
-    ['ch.ivyteam.ivy.rest.client.mapper.JsonFeature']
-  );
+  await editor.detail.features.expectToHaveRowCount(1);
+  await editor.detail.features.expectToHaveRowValues(['ch.ivyteam.ivy.webservice.exec.cxf.feature.HttpBasicAuthenticationFeature']);
 
   const newRow = await editor.detail.features.addRow();
   await newRow.fill(['test']);
-  await editor.detail.features.expectToHaveRowValues(
-    ['ch.ivyteam.ivy.rest.client.authentication.HttpBasicAuthenticationFeature'],
-    ['ch.ivyteam.ivy.rest.client.mapper.JsonFeature'],
-    ['test']
-  );
+  await editor.detail.features.expectToHaveRowCount(2);
+  await editor.detail.features.expectToHaveRowValues(['ch.ivyteam.ivy.webservice.exec.cxf.feature.HttpBasicAuthenticationFeature'], ['test']);
 
   await editor.detail.features.row(1).locator.click();
   await editor.detail.featuresSection.content.getByRole('button', { name: 'Remove Row' }).click();
-  await editor.detail.features.expectToHaveRowValues(['ch.ivyteam.ivy.rest.client.authentication.HttpBasicAuthenticationFeature'], ['test']);
+  await editor.detail.features.expectToHaveRowCount(1);
+  await editor.detail.features.expectToHaveRowValues(['ch.ivyteam.ivy.webservice.exec.cxf.feature.HttpBasicAuthenticationFeature']);
 });
 
 test('edit properties', async ({ page }) => {
   const editor = await WebServiceEditor.openMock(page);
   await editor.main.table.row(0).locator.click();
   await editor.detail.propertiesSection.open();
-  await editor.detail.properties.expectToHaveRowValues(['Text', 'username', 'theWorker'], ['Password', 'password', 'theWorker']);
+  await editor.detail.properties.expectToHaveRowValues(['Text', 'username', 'theBoss'], ['Password', 'password', 'theBoss']);
 
   const newRow = await editor.detail.properties.addRow();
   await newRow.fill(['Path', 'newProp', 'newValue']);
-  await editor.detail.properties.expectToHaveRowValues(['Text', 'username', 'theWorker'], ['Password', 'password', 'theWorker'], ['Path', 'newProp', 'newValue']);
+  await editor.detail.properties.expectToHaveRowValues(['Text', 'username', 'theBoss'], ['Password', 'password', 'theBoss'], ['Path', 'newProp', 'newValue']);
 
   await editor.detail.properties.row(0).locator.click();
   await editor.detail.propertiesSection.content.getByRole('button', { name: 'Remove Row' }).click();
-  await editor.detail.properties.expectToHaveRowValues(['Password', 'password', 'theWorker'], ['Path', 'newProp', 'newValue']);
+  await editor.detail.properties.expectToHaveRowValues(['Password', 'password', 'theBoss'], ['Path', 'newProp', 'newValue']);
 });
 
 test('keyboard properties', async ({ page, browserName }) => {
@@ -128,7 +121,7 @@ test('keyboard properties', async ({ page, browserName }) => {
   const editor = await WebServiceEditor.openMock(page);
   await editor.main.table.row(0).locator.click();
   await editor.detail.propertiesSection.open();
-  await editor.detail.properties.expectToHaveRowValues(['Text', 'username', 'theWorker'], ['Password', 'password', 'theWorker']);
+  await editor.detail.properties.expectToHaveRowValues(['Text', 'username', 'theBoss'], ['Password', 'password', 'theBoss']);
   await editor.detail.properties.row(0).column(1).locator.click();
   await page.keyboard.type('1');
   await page.keyboard.press('ArrowDown');
@@ -139,5 +132,5 @@ test('keyboard properties', async ({ page, browserName }) => {
   await page.keyboard.press('Tab');
   await page.keyboard.type('new');
   await page.keyboard.press('Escape');
-  await editor.detail.properties.expectToHaveRowValues(['Text', 'username1', 'theWorker'], ['Password', 'password', 'theWorker'], ['Text', 'new', '']);
+  await editor.detail.properties.expectToHaveRowValues(['Text', 'username1', 'theBoss'], ['Password', 'password', 'theBoss'], ['Text', 'new', '']);
 });

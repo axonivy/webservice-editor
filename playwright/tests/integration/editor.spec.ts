@@ -2,23 +2,21 @@ import { expect, test } from '@playwright/test';
 import { AddWebServiceDialog } from '../page-objects/AddWebServiceDialog';
 import { WebServiceEditor } from '../page-objects/WebServiceEditor';
 
-// eslint-disable-next-line playwright/no-skipped-test
-test.skip('data', async ({ page }) => {
+test('data', async ({ page }) => {
   const editor = await WebServiceEditor.openWebService(page);
   await expect(editor.main.locator.getByText('Web Services').first()).toBeVisible();
   await editor.main.table.header(0).locator.getByRole('button', { name: 'Sort by Name' }).click();
   await editor.main.table.expectToHaveRowValues(
-    ['batchService', '{ivy.app.baseurl}/api/batch'],
-    ['customClient', '{ivy.app.baseurl}/api/persons'],
-    ['ivy.engine (local.backend)', '{ivy.app.baseurl}/api'],
-    ['jsonPlaceholder', 'https://jsonplaceholder.typicode.com/']
+    ['interceptedPersonService', '{ivy.app.baseurl}/ws/connectivity-demos/16150E1D07E8CA18'],
+    ['interceptedService', '{ivy.app.baseurl}/ws/connectivity-demos/16D29AE50A7A6E34'],
+    ['personService', '{ivy.app.baseurl}/ws/connectivity-demos/16150E1D07E8CA18'],
+    ['smartbearTests', 'http://secure.smartbearsoftware.com/samples/testcomplete12/webservices/Service.asmx']
   );
   await editor.main.table.row(0).locator.click();
-  await expect(editor.detail.header).toHaveText('batchService');
+  await expect(editor.detail.header).toHaveText('interceptedPersonService');
 });
 
-// eslint-disable-next-line playwright/no-skipped-test
-test.skip('save data', async ({ page, browserName }, testInfo) => {
+test('save data', async ({ page, browserName }, testInfo) => {
   const editor = await WebServiceEditor.openWebService(page);
   const dialog = await editor.main.openAddWebServiceDialog();
   const newWebServiceName = `webservice-${browserName}-${testInfo.retry}`;
@@ -54,35 +52,35 @@ test('select web service', async ({ page }) => {
 
 test('search', async ({ page }) => {
   const editor = await WebServiceEditor.openMock(page);
-  await editor.main.table.expectToHaveRowCount(7);
-  await editor.main.search.fill('vice');
-  await editor.main.table.expectToHaveRowCount(4);
+  await editor.main.table.expectToHaveRowCount(5);
+  await editor.main.search.fill('son');
+  await editor.main.table.expectToHaveRowCount(2);
 });
 
 test('sort', async ({ page }) => {
   const editor = await WebServiceEditor.openMock(page);
   await editor.main.table.expectToHaveRowValues(['personService']);
   await editor.main.table.header(0).locator.getByRole('button', { name: 'Sort by Name' }).click();
-  await editor.main.table.expectToHaveRowValues(['batchService']);
+  await editor.main.table.expectToHaveRowValues(['interceptedPersonService']);
 });
 
 test('add', async ({ page }) => {
   const editor = await WebServiceEditor.openMock(page);
-  await editor.main.table.expectToHaveRowCount(7);
+  await editor.main.table.expectToHaveRowCount(5);
   const dialog = await editor.main.openAddWebServiceDialog();
   await dialog.name.locator.fill('NewWebService');
   await dialog.cancel.click();
-  await editor.main.table.expectToHaveRowCount(7);
+  await editor.main.table.expectToHaveRowCount(5);
   await editor.main.openAddWebServiceDialog();
   await dialog.name.locator.fill('NewWebService');
   await dialog.create.click();
-  await editor.main.table.expectToHaveRowCount(8);
-  await editor.main.table.row(7).expectToHaveColumnValues('NewWebService');
-  await editor.main.table.row(7).expectToBeSelected();
+  await editor.main.table.expectToHaveRowCount(6);
+  await editor.main.table.row(5).expectToHaveColumnValues('NewWebService');
+  await editor.main.table.row(5).expectToBeSelected();
   await expect(editor.detail.header).toHaveText('NewWebService');
   await expect(editor.detail.id).toHaveValue(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i);
   await editor.main.delete.click();
-  await editor.main.table.expectToHaveRowCount(7);
+  await editor.main.table.expectToHaveRowCount(5);
 });
 
 test('empty', async ({ page }) => {

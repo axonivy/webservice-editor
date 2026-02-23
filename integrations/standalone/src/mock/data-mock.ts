@@ -3,122 +3,123 @@ import type { WebServiceData } from '@axonivy/webservice-editor-protocol';
 export const data: Array<WebServiceData> = [
   {
     name: 'personService',
-    id: 'e00c9735-7733-4da8-85c8-6413c6fb2cd3',
-    uri: '{ivy.app.baseurl}/api/persons',
+    id: '16150E44A158D09C',
     description: '',
     icon: '',
-    features: ['ch.ivyteam.ivy.rest.client.authentication.HttpBasicAuthenticationFeature', 'ch.ivyteam.ivy.rest.client.mapper.JsonFeature'],
+    features: ['ch.ivyteam.ivy.webservice.exec.cxf.feature.HttpBasicAuthenticationFeature'],
     properties: [
-      { key: 'username', type: 'STRING', value: 'theWorker' },
-      { key: 'password', type: 'PASSWORD', value: 'theWorker' }
+      { key: 'username', type: 'STRING', value: 'theBoss' },
+      { key: 'password', type: 'PASSWORD', value: 'theBoss' }
     ],
-    openApi: {
-      spec: '',
-      namespace: '',
-      resolveFully: false
+    codegen: {
+      wsdlUrl: 'http://127.0.0.1:8081/designer/ws/connectivity-demos/16150E1D07E8CA18?WSDL',
+      underscoreNames: false,
+      namespaceMappings: {}
+    },
+    service: {
+      serviceClass: 'com.axonivy.connectivity.soap.service.client.PersonServiceService',
+      ports: [
+        { name: 'PersonServicePort', locationUri: '{ivy.app.baseurl}/ws/connectivity-demos/16150E1D07E8CA18', fallbackLocationUris: [] }
+      ]
     }
   },
   {
-    name: 'batchService',
-    id: 'b0a5f371-e479-444d-b71c-af1fff4c084d',
-    uri: '{ivy.app.baseurl}/api/batch',
+    name: 'technicalBackend',
+    id: '162B962523BAAB85',
     description: '',
     icon: '',
-    features: ['ch.ivyteam.ivy.rest.client.authentication.HttpBasicAuthenticationFeature'],
-    properties: [
-      { key: 'jersey.config.client.readTimeout', type: 'STRING', value: '35000' },
-      { key: 'jersey.config.client.connectTimeout', type: 'STRING', value: '1000' },
-      { key: 'username', type: 'STRING', value: 'theWorker' },
-      { key: 'password', type: 'PASSWORD', value: 'theWorker' }
-    ],
-    openApi: {
-      spec: '',
-      namespace: '',
-      resolveFully: false
+    features: [],
+    properties: [],
+    codegen: {
+      wsdlUrl: 'http://localhost:8081/designer/ws/connectivity-demos/162B95BB70C3178E?WSDL',
+      underscoreNames: false,
+      namespaceMappings: {}
+    },
+    service: {
+      serviceClass: 'com.axonivy.connectivity.client.TechnicalBackendServiceService',
+      ports: [
+        {
+          name: 'TechnicalBackendServicePort',
+          locationUri: '{ivy.app.baseurl}/ws/connectivity-demos/162B95BB70C3178E',
+          fallbackLocationUris: []
+        }
+      ]
     }
   },
   {
-    name: 'jsonPlaceholder',
-    id: '449e7581-aa1e-4e3b-931a-903253491b50',
-    uri: 'https://jsonplaceholder.typicode.com/',
-    description: 'A free to use test service with fixed data.',
-    icon: '',
-    features: ['ch.ivyteam.ivy.rest.client.mapper.JsonFeature'],
-    properties: [{ key: 'JSON.Deserialization.FAIL_ON_UNKNOWN_PROPERTIES', type: 'STRING', value: 'false' }],
-    openApi: {
-      spec: '',
-      namespace: '',
-      resolveFully: false
-    }
-  },
-  {
-    name: 'odataService',
-    id: '65f8e5a4-768d-4a68-813a-e6d569cda522',
-    uri: 'https://services.odata.org/V4/(S(cnbm44wtbc1v5bgrlek5lpcc))/TripPinServiceRW',
-    description: 'The OData demo service',
-    icon: '',
-    features: ['com.axonivy.connectivity.rest.sample.odata.TripPinJsonFeature'],
-    properties: [{ key: 'JSON.Deserialization.FAIL_ON_UNKNOWN_PROPERTIES', type: 'STRING', value: 'false' }],
-    openApi: {
-      spec: '',
-      namespace: '',
-      resolveFully: false
-    }
-  },
-  {
-    name: 'ivy.engine (local.backend)',
-    id: '4d9a8b09-9968-4476-a8ac-b71a94d25e94',
-    uri: '{ivy.app.baseurl}/api',
-    description:
-      'A client using the REST endpoints defined by the serving ivy.engine. These endpoints either derive from application/projects or static engine resources.',
-    icon: '',
-    features: [
-      'ch.ivyteam.ivy.rest.client.authentication.HttpBasicAuthenticationFeature',
-      'org.glassfish.jersey.media.multipart.MultiPartFeature'
-    ],
-    properties: [
-      { key: 'username', type: 'STRING', value: 'theWorker' },
-      { key: 'password', type: 'PASSWORD', value: 'theWorker' }
-    ],
-    openApi: {
-      spec: '',
-      namespace: '',
-      resolveFully: false
-    }
-  },
-  {
-    name: 'openApiService',
-    id: 'ae69ba01-79b7-4dce-9049-900f8f420907',
-    uri: 'https://petstore3.swagger.io/api/v3',
+    name: 'smartbearTests',
+    id: '162B97C859B22CA3',
     description: '',
     icon: '',
-    features: ['ch.ivyteam.ivy.rest.client.mapper.JsonFeature'],
-    properties: [{ key: 'JSON.Deserialization.FAIL_ON_UNKNOWN_PROPERTIES', type: 'STRING', value: 'false' }],
-    openApi: {
-      spec: 'https://petstore3.swagger.io/api/v3/openapi.json',
-      namespace: 'io.swagger.petstore.client',
-      resolveFully: false
+    features: [],
+    properties: [],
+    codegen: {
+      wsdlUrl: 'http://secure.smartbearsoftware.com/samples/testcomplete12/webservices/Service.asmx?WSDL',
+      underscoreNames: false,
+      namespaceMappings: {}
+    },
+    service: {
+      serviceClass: 'com.smartbear.sample.test.client.SampleWebService',
+      ports: [
+        {
+          name: 'SampleWebServiceSoap',
+          locationUri: 'http://secure.smartbearsoftware.com/samples/testcomplete12/webservices/Service.asmx',
+          fallbackLocationUris: []
+        },
+        {
+          name: 'SampleWebServiceSoap12',
+          locationUri: 'http://secure.smartbearsoftware.com/samples/testcomplete12/webservices/Service.asmx',
+          fallbackLocationUris: []
+        }
+      ]
     }
   },
   {
-    name: 'customClient',
-    id: 'bf0e4baf-96e6-470c-a61c-a2f4dbfe4c8f',
-    uri: '{ivy.app.baseurl}/api/persons',
+    name: 'interceptedService',
+    id: '16D2A643A3A25C52',
+    description: '',
+    icon: '',
+    features: [],
+    properties: [],
+    codegen: {
+      wsdlUrl: 'http://localhost:8081/designer/ws/connectivity-demos/16D29AE50A7A6E34?WSDL',
+      underscoreNames: false,
+      namespaceMappings: {}
+    },
+    service: {
+      serviceClass: 'com.axonivy.connectivity.soap.interceptor.client.ServiceWithExceptionService',
+      ports: [
+        {
+          name: 'ServiceWithExceptionPort',
+          locationUri: '{ivy.app.baseurl}/ws/connectivity-demos/16D29AE50A7A6E34',
+          fallbackLocationUris: []
+        }
+      ]
+    }
+  },
+  {
+    name: 'interceptedPersonService',
+    id: '16330E44A158D09C',
     description: '',
     icon: '',
     features: [
-      'ch.ivyteam.ivy.rest.client.authentication.HttpBasicAuthenticationFeature',
-      'ch.ivyteam.ivy.rest.client.mapper.JsonFeature',
-      'com.axonivy.connectivity.rest.client.connect.KeepAliveFeature'
+      'ch.ivyteam.ivy.webservice.exec.cxf.feature.HttpBasicAuthenticationFeature',
+      'com.axonivy.connectivity.soap.client.CustomLogFeature'
     ],
     properties: [
-      { key: 'username', type: 'STRING', value: 'theWorker' },
-      { key: 'password', type: 'PASSWORD', value: 'theWorker' }
+      { key: 'username', type: 'STRING', value: 'theBoss' },
+      { key: 'password', type: 'PASSWORD', value: 'theBoss' }
     ],
-    openApi: {
-      spec: '',
-      namespace: '',
-      resolveFully: false
+    codegen: {
+      wsdlUrl: 'http://127.0.0.1:8081/designer/ws/connectivity-demos/16150E1D07E8CA18?WSDL',
+      underscoreNames: false,
+      namespaceMappings: {}
+    },
+    service: {
+      serviceClass: 'soap.intercepted.client.person.ivyteam.ch.client.PersonServiceService',
+      ports: [
+        { name: 'PersonServicePort', locationUri: '{ivy.app.baseurl}/ws/connectivity-demos/16150E1D07E8CA18', fallbackLocationUris: [] }
+      ]
     }
   }
 ];

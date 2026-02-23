@@ -1,6 +1,6 @@
 import { useBrowser, type Browser, type BrowserNode } from '@axonivy/ui-components';
 import { IvyIcons } from '@axonivy/ui-icons';
-import type { WebServicePropertyMeta } from '@axonivy/webservice-editor-protocol';
+import type { WsPropertyMeta } from '@axonivy/webservice-editor-protocol';
 import { useMeta } from '../../../hooks/useMeta';
 import { useBrowserData } from './browser-data';
 
@@ -14,12 +14,12 @@ export const usePropertiesBrowser = (initialSearch: string): Browser => {
     name: PROPERTIES_BROWSER_ID,
     icon: IvyIcons.ChangeType,
     browser,
-    infoProvider: row => (row?.original.data ? (row?.original.data as WebServicePropertyMeta).description : ''),
+    infoProvider: row => (row?.original.data ? (row?.original.data as WsPropertyMeta).description : ''),
     applyModifier: row => ({ value: row?.original.value ?? '' })
   };
 };
 
-const propertiesToBrowserNode = (prop: WebServicePropertyMeta): BrowserNode<WebServicePropertyMeta> => {
+const propertiesToBrowserNode = (prop: WsPropertyMeta): BrowserNode<WsPropertyMeta> => {
   return {
     value: prop.property,
     info: prop.description,

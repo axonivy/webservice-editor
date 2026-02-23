@@ -5,8 +5,8 @@ import type {
   ValidationResult,
   WebServiceContext,
   WebServiceEditorData,
-  WebServicePropertyMeta,
-  WebServiceSaveDataArgs
+  WebServiceSaveDataArgs,
+  WsPropertyMeta
 } from './data/webservice';
 
 export interface WebServiceActionArgs {
@@ -16,7 +16,7 @@ export interface WebServiceActionArgs {
 }
 
 export interface WebServiceMetaRequestTypes {
-  'meta/properties/all': [void, Array<WebServicePropertyMeta>];
+  'meta/properties/all': [void, Array<WsPropertyMeta>];
   'meta/features/all': [WebServiceContext, Array<JavaType>];
 }
 

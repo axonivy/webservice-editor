@@ -8,28 +8,20 @@ const data: Array<WebServiceData> = [
     description: '',
     icon: '',
     id: '1',
-    uri: '',
     features: [],
     properties: [],
-    openApi: {
-      namespace: '',
-      resolveFully: false,
-      spec: ''
-    }
+    codegen: { wsdlUrl: '', underscoreNames: false, namespaceMappings: {} },
+    service: { serviceClass: '', ports: [{ name: '', locationUri: '', fallbackLocationUris: [] }] }
   },
   {
     name: 'Teamleader',
     description: '',
     icon: '',
     id: '2',
-    uri: '',
     features: [],
     properties: [],
-    openApi: {
-      namespace: '',
-      resolveFully: false,
-      spec: ''
-    }
+    codegen: { wsdlUrl: '', underscoreNames: false, namespaceMappings: {} },
+    service: { serviceClass: '', ports: [{ name: '', locationUri: '', fallbackLocationUris: [] }] }
   }
 ];
 

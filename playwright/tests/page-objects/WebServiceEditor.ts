@@ -25,7 +25,7 @@ export class WebServiceEditor {
 
   static async openWebService(page: Page, options?: { readonly?: boolean; theme?: string }) {
     const serverUrl = server.replace(/^https?:\/\//, '');
-    let url = `?server=${serverUrl}${ws}&app=${app}&pmv=${pmv}&file=config/web-services.yaml`;
+    let url = `?server=${serverUrl}${ws}&app=${app}&pmv=${pmv}&file=config/webservice-clients.yaml`;
     if (options) {
       url += Object.entries(options)
         .map(([key, value]) => `&${key}=${value}`)

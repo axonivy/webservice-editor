@@ -1,4 +1,3 @@
-import type { WebServiceData } from '@axonivy/webservice-editor-protocol';
 import {
   BasicField,
   Button,
@@ -24,6 +23,7 @@ import {
   useTableSort
 } from '@axonivy/ui-components';
 import { IvyIcons } from '@axonivy/ui-icons';
+import type { WebServiceData } from '@axonivy/webservice-editor-protocol';
 import { getCoreRowModel, useReactTable, type ColumnDef, type Table as ReactTable } from '@tanstack/react-table';
 import { useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -62,7 +62,8 @@ export const Main = () => {
         )
       },
       {
-        accessorKey: 'uri',
+        id: 'uri',
+        accessorFn: row => row.service.ports[0]?.locationUri ?? '',
         header: ({ column }) => <SortableHeader column={column} name={t('common.label.uri')} />,
         cell: cell => (
           <Flex alignItems='center' gap={1}>

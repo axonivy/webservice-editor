@@ -1,4 +1,4 @@
-import type { WebServiceData, ValidationResult } from '@axonivy/webservice-editor-protocol';
+import type { ValidationResult, WebServiceData } from '@axonivy/webservice-editor-protocol';
 import { customRenderHook } from 'test-utils';
 import { useValidations } from './useValidation';
 
@@ -20,40 +20,40 @@ const data: Array<WebServiceData> = [
     description: '',
     icon: '',
     id: '1',
-    uri: '',
     features: [],
-    openApi: { namespace: '', spec: '', resolveFully: false },
-    properties: []
+    properties: [],
+    codegen: { wsdlUrl: '', underscoreNames: false, namespaceMappings: {} },
+    service: { serviceClass: '', ports: [{ name: '', locationUri: '', fallbackLocationUris: [] }] }
   },
   {
     name: 'Teamleader',
     description: '',
     icon: '',
     id: '2',
-    uri: '',
     features: [],
-    openApi: { namespace: '', spec: '', resolveFully: false },
-    properties: []
+    properties: [],
+    codegen: { wsdlUrl: '', underscoreNames: false, namespaceMappings: {} },
+    service: { serviceClass: '', ports: [{ name: '', locationUri: '', fallbackLocationUris: [] }] }
   },
   {
     name: 'Manager',
     description: '',
     icon: '',
     id: '3',
-    uri: '',
     features: [],
-    openApi: { namespace: '', spec: '', resolveFully: false },
-    properties: []
+    properties: [],
+    codegen: { wsdlUrl: '', underscoreNames: false, namespaceMappings: {} },
+    service: { serviceClass: '', ports: [{ name: '', locationUri: '', fallbackLocationUris: [] }] }
   },
   {
     name: 'HR Manager',
     description: '',
     icon: '',
     id: '4',
-    uri: '',
     features: [],
-    openApi: { namespace: '', spec: '', resolveFully: false },
-    properties: []
+    properties: [],
+    codegen: { wsdlUrl: '', underscoreNames: false, namespaceMappings: {} },
+    service: { serviceClass: '', ports: [{ name: '', locationUri: '', fallbackLocationUris: [] }] }
   }
 ];
 

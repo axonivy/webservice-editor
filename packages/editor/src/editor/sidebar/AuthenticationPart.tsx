@@ -1,11 +1,12 @@
-import type { WebServiceData } from '@axonivy/webservice-editor-protocol';
 import { BasicField, BasicInput, Field, Flex, Label, PasswordInput, RadioGroup, RadioGroupItem } from '@axonivy/ui-components';
+import type { WebServiceData } from '@axonivy/webservice-editor-protocol';
 import { useTranslation } from 'react-i18next';
 
-type AuthenticationType = 'none' | 'basic' | 'digest' | 'ntlm';
-const BASIC_AUTH_FEATURE = 'ch.ivyteam.ivy.rest.client.authentication.HttpBasicAuthenticationFeature' as const;
-const DIGEST_AUTH_FEATURE = 'ch.ivyteam.ivy.rest.client.authentication.HttpDigestAuthenticationFeature' as const;
-const NTLM_AUTH_FEATURE = 'ch.ivyteam.ivy.rest.client.authentication.NtlmAuthenticationFeature' as const;
+type AuthenticationType = 'none' | 'basic' | 'digest' | 'ntlm' | 'ws-security';
+const BASIC_AUTH_FEATURE = 'ch.ivyteam.ivy.webservice.exec.cxf.feature.HttpBasicAuthenticationFeature' as const;
+const DIGEST_AUTH_FEATURE = 'ch.ivyteam.ivy.webservice.exec.cxf.feature.HttpDigestAuthenticationFeature' as const;
+const NTLM_AUTH_FEATURE = 'ch.ivyteam.ivy.webservice.exec.cxf.feature.NTLMAuthenticationFeature' as const;
+const WS_SECURITY_AUTH_FEATURE = 'ch.ivyteam.ivy.webservice.exec.cxf.feature.WSSecurityAuthenticationFeature' as const;
 
 type AuthenticationPartProps = {
   webService: WebServiceData;
@@ -21,16 +22,22 @@ export const AuthenticationPart = ({ webService, handleAttributeChange }: Authen
     value = 'digest';
   } else if (webService.features.includes(NTLM_AUTH_FEATURE)) {
     value = 'ntlm';
+  } else if (webService.features.includes(WS_SECURITY_AUTH_FEATURE)) {
+    value = 'ws-security';
   }
 
   const onAuthenticationChange = (newValue: AuthenticationType) => {
-    const features = webService.features.filter(f => f !== BASIC_AUTH_FEATURE && f !== DIGEST_AUTH_FEATURE && f !== NTLM_AUTH_FEATURE);
+    const features = webService.features.filter(
+      f => f !== BASIC_AUTH_FEATURE && f !== DIGEST_AUTH_FEATURE && f !== NTLM_AUTH_FEATURE && f !== WS_SECURITY_AUTH_FEATURE
+    );
     if (newValue === 'basic') {
       features.push(BASIC_AUTH_FEATURE);
     } else if (newValue === 'digest') {
       features.push(DIGEST_AUTH_FEATURE);
     } else if (newValue === 'ntlm') {
       features.push(NTLM_AUTH_FEATURE);
+    } else if (newValue === 'ws-security') {
+      features.push(WS_SECURITY_AUTH_FEATURE);
     }
     handleAttributeChange('features', features);
   };
@@ -71,6 +78,10 @@ export const AuthenticationPart = ({ webService, handleAttributeChange }: Authen
         <Field direction='row' alignItems='center' gap={2}>
           <RadioGroupItem value='ntlm' />
           <Label>{t('label.authentication.ntlm')}</Label>
+        </Field>
+        <Field direction='row' alignItems='center' gap={2}>
+          <RadioGroupItem value='ws-security' />
+          <Label>{t('label.authentication.wsSecurity')}</Label>
         </Field>
       </RadioGroup>
       <BasicField label={t('common.label.username')}>

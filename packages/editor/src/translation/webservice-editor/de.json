@@ -57,7 +57,8 @@
       "basic": "Basic",
       "digest": "Digest",
       "none": "Keine",
-      "ntlm": "NTLM"
+      "ntlm": "NTLM",
+      "wsSecurity": "WS Security"
     },
     "noWebServiceSelected": "Kein Web Service ausgewählt",
     "removeRow": "Zeile entfernen",

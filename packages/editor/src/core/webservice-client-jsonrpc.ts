@@ -10,6 +10,7 @@ import {
 import type {
   EditorFileContent,
   Event,
+  ValidationResult,
   WebServiceActionArgs,
   WebServiceClient,
   WebServiceContext,
@@ -18,8 +19,7 @@ import type {
   WebServiceNotificationTypes,
   WebServiceOnNotificationTypes,
   WebServiceRequestTypes,
-  WebServiceSaveDataArgs,
-  ValidationResult
+  WebServiceSaveDataArgs
 } from '@axonivy/webservice-editor-protocol';
 
 export class WebServiceClientJsonRpc extends BaseRpcClient implements WebServiceClient {
@@ -67,7 +67,10 @@ export class WebServiceClientJsonRpc extends BaseRpcClient implements WebService
     void this.sendNotification('action', action);
   }
 
-  sendRequest<K extends keyof WebServiceRequestTypes>(command: K, args?: WebServiceRequestTypes[K][0]): Promise<WebServiceRequestTypes[K][1]> {
+  sendRequest<K extends keyof WebServiceRequestTypes>(
+    command: K,
+    args?: WebServiceRequestTypes[K][0]
+  ): Promise<WebServiceRequestTypes[K][1]> {
     return args === undefined ? this.connection.sendRequest(command) : this.connection.sendRequest(command, args);
   }
 
@@ -75,7 +78,10 @@ export class WebServiceClientJsonRpc extends BaseRpcClient implements WebService
     return this.connection.sendNotification(command, args);
   }
 
-  onNotification<K extends keyof WebServiceOnNotificationTypes>(kind: K, listener: (args: WebServiceOnNotificationTypes[K]) => unknown): Disposable {
+  onNotification<K extends keyof WebServiceOnNotificationTypes>(
+    kind: K,
+    listener: (args: WebServiceOnNotificationTypes[K]) => unknown
+  ): Disposable {
     return this.connection.onNotification(kind, listener);
   }
 

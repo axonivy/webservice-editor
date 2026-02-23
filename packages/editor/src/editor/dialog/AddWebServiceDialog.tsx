@@ -67,10 +67,10 @@ const AddDialogContent = ({ table, closeDialog }: { table: Table<WebServiceData>
         name,
         description: '',
         icon: '',
-        uri: '',
         features: [],
         properties: [],
-        openApi: { namespace: '', resolveFully: false, spec: '' }
+        codegen: { wsdlUrl: '', underscoreNames: false, namespaceMappings: {} },
+        service: { serviceClass: '', ports: [{ name: '', locationUri: '', fallbackLocationUris: [] }] }
       }
     ]);
     if (!event.ctrlKey && !event.metaKey) {
