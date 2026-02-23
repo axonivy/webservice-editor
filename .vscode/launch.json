@@ -8,7 +8,7 @@
       "name": "Launch Standalone (Chrome)",
       "type": "chrome",
       "request": "launch",
-      "url": "http://localhost:3000/?server=localhost:8080/~Developer-webservice-test-project&app=Developer-webservice-test-project&pmv=webservice-test-project&file=config/web-services.yaml&directSave",
+      "url": "http://localhost:3000/?server=localhost:8080/~Developer-webservice-test-project&app=Developer-webservice-test-project&pmv=webservice-test-project&file=config/webservice-clients.yaml&directSave",
       "presentation": {
         "group": "4. Standalone",
         "order": 1

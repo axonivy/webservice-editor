@@ -5,18 +5,18 @@
  * and run json-schema-to-typescript to regenerate this file.
  */
 
-export type WebServicePropertyType = ("STRING" | "PASSWORD" | "PATH")
-export type Severity = 'INFO' | 'WARNING' | 'ERROR';
+export type Severity = ("INFO" | "WARNING" | "ERROR")
+export type RestClientPropertyType = "STRING" | "PASSWORD";
 
 export interface Webservices {
   boolean: boolean;
   editorFileContent: EditorFileContent;
   javaType: JavaType[];
+  validationResult: ValidationResult[];
   webServiceContext: WebServiceContext;
   webServiceEditorData: WebServiceEditorData;
   webServiceSaveDataArgs: WebServiceSaveDataArgs;
-  webServicePropertyMeta: WebServicePropertyMeta[];
-  validationResult: ValidationResult[];
+  wsPropertyMeta: WsPropertyMeta[];
   [k: string]: unknown;
 }
 export interface EditorFileContent {
@@ -26,6 +26,11 @@ export interface JavaType {
   fullQualifiedName: string;
   packageName: string;
   simpleName: string;
+}
+export interface ValidationResult {
+  message: string;
+  path: string;
+  severity: Severity;
 }
 export interface WebServiceContext {
   app: string;
@@ -39,36 +44,43 @@ export interface WebServiceEditorData {
   readonly: boolean;
 }
 export interface WebServiceData {
+  codegen: WsCodegenOpts;
   description: string;
   features: string[];
   icon: string;
   id: string;
   name: string;
-  openApi: WebServiceOpenApi;
-  properties: WebServiceProperty[];
-  uri: string;
+  properties: WsClientProperty[];
+  service: WsService;
 }
-export interface WebServiceOpenApi {
-  namespace: string;
-  resolveFully: boolean;
-  spec: string;
+export interface WsCodegenOpts {
+  namespaceMappings: MapStringString;
+  underscoreNames: boolean;
+  wsdlUrl: string;
 }
-export interface WebServiceProperty {
+export interface MapStringString {
+  [k: string]: string;
+}
+export interface WsClientProperty {
   key: string;
-  type: WebServicePropertyType;
+  type: RestClientPropertyType;
   value: string;
+}
+export interface WsService {
+  ports: WsPort[];
+  serviceClass: string;
+}
+export interface WsPort {
+  fallbackLocationUris: string[];
+  locationUri: string;
+  name: string;
 }
 export interface WebServiceSaveDataArgs {
   context: WebServiceContext;
   data: WebServiceData[];
   directSave: boolean;
 }
-export interface WebServicePropertyMeta {
+export interface WsPropertyMeta {
   description: string;
   property: string;
-}
-export interface ValidationResult {
-  message: string;
-  path: string;
-  severity: Severity;
 }

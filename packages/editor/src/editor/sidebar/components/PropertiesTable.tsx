@@ -1,4 +1,3 @@
-import type { WebServiceProperty } from '@axonivy/webservice-editor-protocol';
 import {
   BasicCollapsible,
   InputCell,
@@ -10,6 +9,7 @@ import {
   TableCell,
   TableResizableHeader
 } from '@axonivy/ui-components';
+import type { WsClientProperty } from '@axonivy/webservice-editor-protocol';
 import { flexRender, type ColumnDef } from '@tanstack/react-table';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -17,14 +17,14 @@ import { useResizableEditableTable } from '../../../hooks/useResizableEditableTa
 import { InputCellWithBrowser } from './InputCellWithBrowser';
 
 type PropertiesTableProps = {
-  data: Array<WebServiceProperty>;
-  onChange: (props: Array<WebServiceProperty>) => void;
+  data: Array<WsClientProperty>;
+  onChange: (props: Array<WsClientProperty>) => void;
 };
 
 export const PropertiesTable = ({ data, onChange }: PropertiesTableProps) => {
   const { t } = useTranslation();
 
-  const columns = useMemo<ColumnDef<WebServiceProperty, string>[]>(
+  const columns = useMemo<ColumnDef<WsClientProperty, string>[]>(
     () => [
       {
         accessorKey: 'type',

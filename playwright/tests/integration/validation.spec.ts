@@ -4,20 +4,19 @@ import { WebServiceEditor } from '../page-objects/WebServiceEditor';
 test('table', async ({ page }) => {
   const editor = await WebServiceEditor.openMock(page);
   const dialog = await editor.main.openAddWebServiceDialog();
-  await dialog.name.locator.fill('invalid#restclient');
+  await dialog.name.locator.fill('invalid#client');
   await dialog.create.click();
-  await expect(editor.main.table.locator.locator('.ui-message-row').first()).toHaveText('WebService invalid#restclient contains invalid characters');
+  await expect(editor.main.table.locator.locator('.ui-message-row').first()).toHaveText('WebService invalid#client contains invalid characters');
 });
 
 test('detail', async ({ page }) => {
   const editor = await WebServiceEditor.openMock(page);
   const dialog = await editor.main.openAddWebServiceDialog();
-  await dialog.name.locator.fill('invalid#restclient');
+  await dialog.name.locator.fill('invalid#client');
   await dialog.create.click();
   await editor.main.table.lastRow().locator.click();
 
-  await (await editor.detail.name.message()).expectToBeError('WebService invalid#restclient contains invalid characters');
-  await (await editor.detail.uri.message()).expectToBeError('URI empty');
+  await (await editor.detail.name.message()).expectToBeError('WebService invalid#client contains invalid characters');
   await editor.detail.featuresSection.open();
   await editor.detail.features.expectToHaveRowCount(0);
   const row = await editor.detail.features.addRow();

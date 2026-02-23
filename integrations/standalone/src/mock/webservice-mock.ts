@@ -1,12 +1,12 @@
 import { Emitter } from '@axonivy/jsonrpc';
 import type {
   EditorFileContent,
+  ValidationResult,
   WebServiceActionArgs,
   WebServiceClient,
   WebServiceEditorData,
   WebServiceMetaRequestTypes,
-  WebServiceSaveDataArgs,
-  ValidationResult
+  WebServiceSaveDataArgs
 } from '@axonivy/webservice-editor-protocol';
 import { data } from './data-mock';
 import { META_FEATURES, META_PROPS } from './meta.mock';
@@ -16,7 +16,7 @@ export class WebServiceMock implements WebServiceClient {
   private webserviceData: WebServiceEditorData;
   constructor() {
     this.webserviceData = {
-      context: { app: 'mockApp', pmv: 'mockPmv', file: 'web-services.yaml' },
+      context: { app: 'mockApp', pmv: 'mockPmv', file: 'webservice-clients.yaml' },
       data: data,
       helpUrl: 'https://dev.axonivy.com',
       readonly: false
