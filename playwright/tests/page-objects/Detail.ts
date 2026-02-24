@@ -1,6 +1,7 @@
 import { type Locator, type Page } from '@playwright/test';
 import { RadioGroup } from './components/RadioGroup';
 import { Section } from './components/Section';
+import { Select } from './components/Select';
 import { Table } from './components/Table';
 import { Textbox } from './components/Textbox';
 
@@ -14,7 +15,6 @@ export class Detail {
   readonly name: Textbox;
   readonly description: Locator;
   readonly icon: Locator;
-  readonly uri: Textbox;
   readonly authSection: Section;
   readonly authenticationType: RadioGroup;
   readonly username: Locator;
@@ -23,6 +23,9 @@ export class Detail {
   readonly features: Table;
   readonly propertiesSection: Section;
   readonly properties: Table;
+  readonly endpointSection: Section;
+  readonly endpointPort: Select;
+  readonly endpointUrls: Table;
 
   constructor(page: Page) {
     this.page = page;
@@ -34,7 +37,6 @@ export class Detail {
     this.name = new Textbox(this.locator, { name: 'Name' });
     this.description = this.locator.getByLabel('Description', { exact: true });
     this.icon = this.locator.getByLabel('Icon', { exact: true });
-    this.uri = new Textbox(this.locator, { name: 'URI' });
 
     this.authSection = new Section(page, this.locator, 'Authentication');
     this.authenticationType = new RadioGroup(this.authSection.content);
@@ -46,5 +48,9 @@ export class Detail {
 
     this.propertiesSection = new Section(page, this.locator, 'Properties');
     this.properties = new Table(page, this.propertiesSection.content, ['select', 'input', 'input']);
+
+    this.endpointSection = new Section(page, this.locator, 'Endpoint URI');
+    this.endpointPort = new Select(page, this.endpointSection.content, { label: 'Port' });
+    this.endpointUrls = new Table(page, this.endpointSection.content, ['input']);
   }
 }

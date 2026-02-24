@@ -19,18 +19,15 @@ test('edit details', async ({ page }) => {
   await expect(editor.detail.name.locator).toHaveValue('personService');
   await expect(editor.detail.description).toBeEmpty();
   await expect(editor.detail.icon).toBeEmpty();
-  await expect(editor.detail.uri.locator).toHaveValue('{ivy.app.baseurl}/ws/connectivity-demos/16150E1D07E8CA18');
 
   await editor.detail.name.locator.fill('Updated service');
   await editor.detail.description.fill('desc');
   await editor.detail.icon.fill('file://icon');
-  await editor.detail.uri.locator.fill('{ivy.app.baseurl}/api/updatedService');
 
   await expect(editor.detail.header).toHaveText('Updated service');
   await expect(editor.detail.name.locator).toHaveValue('Updated service');
   await expect(editor.detail.description).toHaveValue('desc');
   await expect(editor.detail.icon).toHaveValue('file://icon');
-  await expect(editor.detail.uri.locator).toHaveValue('{ivy.app.baseurl}/api/updatedService');
 });
 
 test('edit authentication type', async ({ page }) => {
@@ -133,4 +130,41 @@ test('keyboard properties', async ({ page, browserName }) => {
   await page.keyboard.type('new');
   await page.keyboard.press('Escape');
   await editor.detail.properties.expectToHaveRowValues(['Text', 'username1', 'theBoss'], ['Password', 'password', 'theBoss'], ['Text', 'new', '']);
+});
+
+test('edit endpoints', async ({ page }) => {
+  const editor = await WebServiceEditor.openMock(page);
+  await editor.main.table.row(2).locator.click();
+  await expect(editor.detail.header).toHaveText('smartbearTests');
+  await editor.detail.endpointSection.open();
+  await editor.detail.endpointPort.expectValue('SampleWebServiceSoap');
+  await editor.detail.endpointUrls.expectToHaveRowValues(['http://secure.smartbearsoftware.com/samples/testcomplete12/webservices/Service.asmx']);
+
+  const row = await editor.detail.endpointUrls.addRow();
+  await row.fill(['http://example.com']);
+  await editor.detail.endpointUrls.expectToHaveRowValues(['http://secure.smartbearsoftware.com/samples/testcomplete12/webservices/Service.asmx'], ['http://example.com']);
+  await editor.detail.endpointUrls.row(1).expectToBeSelected();
+  const moveUp = editor.detail.endpointSection.content.getByRole('button', { name: 'Move Up' });
+  const moveDown = editor.detail.endpointSection.content.getByRole('button', { name: 'Move Down' });
+  await expect(moveUp).toBeEnabled();
+  await expect(moveDown).toBeDisabled();
+
+  await moveUp.click();
+  await editor.detail.endpointUrls.expectToHaveRowValues(['http://example.com'], ['http://secure.smartbearsoftware.com/samples/testcomplete12/webservices/Service.asmx']);
+  await editor.detail.endpointUrls.row(0).expectToBeSelected();
+  await expect(moveUp).toBeDisabled();
+  await expect(moveDown).toBeEnabled();
+
+  await editor.detail.endpointPort.choose('SampleWebServiceSoap12');
+  await editor.detail.endpointUrls.expectToHaveRowCount(1);
+  await editor.detail.endpointUrls.expectToHaveRowValues(['http://www.axonivy.com']);
+
+  await editor.detail.endpointPort.choose('SampleWebServiceSoap');
+  await editor.detail.endpointUrls.expectToHaveRowCount(2);
+  await editor.detail.endpointUrls.expectToHaveRowValues(['http://example.com'], ['http://secure.smartbearsoftware.com/samples/testcomplete12/webservices/Service.asmx']);
+
+  await editor.detail.endpointUrls.row(1).locator.click();
+  await editor.detail.endpointSection.content.getByRole('button', { name: 'Remove Row' }).click();
+  await editor.detail.endpointUrls.expectToHaveRowCount(1);
+  await editor.detail.endpointUrls.expectToHaveRowValues(['http://example.com']);
 });

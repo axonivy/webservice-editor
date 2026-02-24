@@ -116,7 +116,7 @@ export const useResizableEditableTable = <TData,>({
     ];
   };
 
-  return { table, tableRef, rowSelection, selectedRowActions, setRowSelection, showAddButton };
+  return { table, tableRef, rowSelection, selectedRowActions, setRowSelection, showAddButton, updateTableData };
 };
 
 const focusNewCell = (domTable: HTMLTableElement | null, rowIndex: number, cellType: 'input' | 'button') => {
