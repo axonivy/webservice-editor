@@ -50,7 +50,7 @@ export class Detail {
     this.properties = new Table(page, this.propertiesSection.content, ['select', 'input', 'input']);
 
     this.endpointSection = new Section(page, this.locator, 'Endpoint URI');
-    this.endpointPort = new Select(page, this.endpointSection.content, { label: 'Port' });
+    this.endpointPort = new Select(page, this.endpointSection.content, { label: 'Ports' });
     this.endpointUrls = new Table(page, this.endpointSection.content, ['input']);
   }
 }

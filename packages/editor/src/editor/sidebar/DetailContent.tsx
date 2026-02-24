@@ -62,7 +62,7 @@ export const DetailContent = () => {
       />
       <PropertiesTable data={webservice.properties} onChange={change => handleAttributeChange('properties', change)} />
       <BasicCollapsible label={t('label.endpoint')}>
-        <Service key={webservice.name} data={webservice.service} onChange={change => handleAttributeChange('service', change)} />
+        <Service key={selectedIndex} data={webservice.service} onChange={change => handleAttributeChange('service', change)} />
       </BasicCollapsible>
     </Flex>
   );
