@@ -52,7 +52,7 @@ pipeline {
                 devSchema="${artifacts}/build/schema/target/editor-ts/*/webservice-clients-tsgen.json/*zip*/schema.zip"
                 curl -o schema.zip ${devSchema}
                 unzip -j schema.zip
-                mv $PWD/webservices-tsgen.json $PWD/webservices.json
+                mv $PWD/webservice-clients-tsgen.json $PWD/webservices.json
                 pnpm run protocol generate $PWD/webservices.json
                 pnpm run build && pnpm run lint:ci
               '''
