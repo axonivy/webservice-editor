@@ -68,7 +68,7 @@ export const data: Array<WebServiceData> = [
         },
         {
           name: 'SampleWebServiceSoap12',
-          locationUri: 'http://secure.smartbearsoftware.com/samples/testcomplete12/webservices/Service.asmx',
+          locationUri: 'http://www.axonivy.com',
           fallbackLocationUris: []
         }
       ]

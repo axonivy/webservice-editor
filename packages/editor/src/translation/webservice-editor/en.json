@@ -60,15 +60,21 @@
       "ntlm": "NTLM",
       "wsSecurity": "WS Security"
     },
+    "endpoint": "Endpoint URI",
+    "moveDown": "Move Down",
+    "moveUp": "Move Up",
     "noWebServiceSelected": "No Web Service Selected",
+    "ports": "Ports",
     "removeRow": "Remove Row",
     "webServices": "Web Services"
   },
   "message": {
     "addFirstWebService": "Add your first Web Service to get started.",
     "emptyName": "Name cannot be empty.",
+    "endpointInfoDescription": "The first URL is the default, followed by fallback endpoints.",
     "errorOnly": "Error: {{error}}",
     "notFound": "Not Found",
+    "serviceClassMissing": "Please generate your Web Service client first from a WSDL to edit the endpoints.",
     "webserviceAlreadyExists": "Web Service already exists."
   },
   "title": {

@@ -9,6 +9,7 @@ import './DetailContent.css';
 import { FeaturesTable } from './components/FeaturesTable';
 import { NameInput } from './components/NameInput';
 import { PropertiesTable } from './components/PropertiesTable';
+import { Service } from './components/Service';
 
 export const DetailContent = () => {
   const { t } = useTranslation();
@@ -23,16 +24,6 @@ export const DetailContent = () => {
       const oldWebservice = old[selectedIndex];
       if (oldWebservice) {
         oldWebservice[key] = value;
-      }
-      return structuredClone(old);
-    });
-
-  const handleUriChange = (value: string) =>
-    setData(old => {
-      const oldWebservice = old[selectedIndex];
-      const firstPort = oldWebservice?.service.ports[0];
-      if (firstPort) {
-        firstPort.locationUri = value;
       }
       return structuredClone(old);
     });
@@ -59,9 +50,6 @@ export const DetailContent = () => {
           <BasicField label={t('common.label.icon')}>
             <BasicInput value={webservice.icon} onChange={event => handleAttributeChange('icon', event.target.value)} />
           </BasicField>
-          <BasicField label={t('common.label.uri')}>
-            <BasicInput value={webservice.service.ports[0]?.locationUri ?? ''} onChange={event => handleUriChange(event.target.value)} />
-          </BasicField>
         </Flex>
       </BasicCollapsible>
       <BasicCollapsible label={t('common.label.authentication')}>
@@ -73,6 +61,9 @@ export const DetailContent = () => {
         validationPath={webservice.name}
       />
       <PropertiesTable data={webservice.properties} onChange={change => handleAttributeChange('properties', change)} />
+      <BasicCollapsible label={t('label.endpoint')}>
+        <Service key={webservice.name} data={webservice.service} onChange={change => handleAttributeChange('service', change)} />
+      </BasicCollapsible>
     </Flex>
   );
 };

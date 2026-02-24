@@ -26,15 +26,17 @@ test('save data', async ({ page, browserName }, testInfo) => {
   await row.expectToHaveColumnValues(newWebServiceName, '');
   await row.locator.click();
   await expect(editor.detail.header).toHaveText(newWebServiceName);
-  await editor.detail.uri.locator.fill('www.axonivy.com');
-  await row.expectToHaveColumnValues(newWebServiceName, 'www.axonivy.com');
+
+  const changeName = `change-${browserName}-${testInfo.retry}`;
+  await editor.detail.name.locator.fill(changeName);
+  await row.expectToHaveColumnValues(changeName, '');
 
   await page.reload();
-  await row.expectToHaveColumnValues(newWebServiceName, 'www.axonivy.com');
+  await row.expectToHaveColumnValues(changeName, '');
 
   await row.locator.click();
   await editor.main.delete.click();
-  await expect(row.column(0).locator).not.toHaveText(newWebServiceName);
+  await expect(editor.main.table.locator).not.toHaveText(changeName);
 });
 
 test('select web service', async ({ page }) => {
