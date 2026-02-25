@@ -11,15 +11,18 @@
     "label": {
       "apply": "Anwenden",
       "authentication": "Authentifizierung",
+      "browse": "Browsen",
       "browser": "Browser",
       "cancel": "Abbrechen",
       "description": "Beschreibung",
       "details": "Details",
       "features": "Funktionen",
+      "generate": "Generieren",
       "icon": "Symbol",
       "id": "ID",
       "info": "Info",
       "name": "Name",
+      "namespace": "Namespace",
       "password": "Passwort",
       "path": "Pfad",
       "properties": "Eigenschaften",
@@ -46,7 +49,14 @@
       "title": "Browser"
     },
     "create": "Erstellen",
-    "createTooltip": "Halte {{modifier}} gedrückt, um einen weiteren Web Service hinzuzufügen."
+    "createTooltip": "Halte {{modifier}} gedrückt, um einen weiteren Web Service hinzuzufügen.",
+    "generateService": {
+      "desc": "Generieren Sie einen neuen Web Service-Client aus einer WSDL.",
+      "notYetImplemented": "Diese Funktion ist noch nicht implementiert.",
+      "title": "Service generieren",
+      "underscoreOption": "Unterstriche in Namen beibehalten",
+      "wsdlUri": "WSDL-URI"
+    }
   },
   "hotkey": {
     "addWebService": "Web Service hinzufügen ({{hotkey}})",

@@ -102,3 +102,18 @@ test('empty', async ({ page }) => {
   await page.keyboard.press('a');
   await expect(dialog.locator).toBeVisible();
 });
+
+test('generate service', async ({ page }) => {
+  const editor = await WebServiceEditor.openMock(page);
+  await expect(editor.main.generate).toBeDisabled();
+  await editor.main.table.row(0).locator.click();
+  await expect(editor.main.generate).toBeEnabled();
+
+  const dialog = await editor.main.openGenerateServiceDialog();
+  await expect(dialog.namespaceInput).toBeDisabled();
+  await expect(dialog.underscoreOption).toBeDisabled();
+
+  await dialog.fileInput.fill('http://example.com/service?wsdl');
+  await expect(dialog.namespaceInput).toBeEnabled();
+  await expect(dialog.underscoreOption).toBeEnabled();
+});
