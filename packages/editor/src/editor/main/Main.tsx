@@ -56,7 +56,7 @@ export const Main = () => {
         header: ({ column }) => <SortableHeader column={column} name={t('common.label.name')} />,
         cell: cell => (
           <Flex alignItems='center' gap={1}>
-            {<IvyIcon icon={IvyIcons.User} />}
+            {<IvyIcon icon={IvyIcons.WsStart} />}
             <span>{cell.getValue()}</span>
           </Flex>
         )

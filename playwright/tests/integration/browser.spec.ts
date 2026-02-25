@@ -61,12 +61,12 @@ test('properties', async ({ page }) => {
   await browser.view.getByRole('textbox').clear();
   await browser.table.expectToHaveRowCount(20);
   await browser.table.expectToHaveRowValues([
-    'NTLM.challengeWhether to authenticate via NTLM by responding to auth-challenges. Used by the ch.ivyteam.ivy.webservice.exec.cxf.feature.NTLMAuthenticationFeature Default: true'
+    'NTLM.challengeWhether to authenticate via NTLM by responding to auth-challenges. Used by the ch.ivyteam.ivy.webservice.exec.cxf.feature.NTLMAuthenticationFeature'
   ]);
 
   await browser.table.row(0).locator.click();
   await expect(browser.info.content).toHaveText(
-    'InfoWhether to authenticate via NTLM by responding to auth-challenges. Used by the ch.ivyteam.ivy.webservice.exec.cxf.feature.NTLMAuthenticationFeature Default: true'
+    'InfoWhether to authenticate via NTLM by responding to auth-challenges. Used by the ch.ivyteam.ivy.webservice.exec.cxf.feature.NTLMAuthenticationFeatureDefault value: true'
   );
 });
 

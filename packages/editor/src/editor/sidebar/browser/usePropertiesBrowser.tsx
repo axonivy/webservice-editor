@@ -1,6 +1,7 @@
-import { useBrowser, type Browser, type BrowserNode } from '@axonivy/ui-components';
+import { Flex, useBrowser, type Browser, type BrowserNode } from '@axonivy/ui-components';
 import { IvyIcons } from '@axonivy/ui-icons';
 import type { WsPropertyMeta } from '@axonivy/webservice-editor-protocol';
+import { useTranslation } from 'react-i18next';
 import { useMeta } from '../../../hooks/useMeta';
 import { useBrowserData } from './browser-data';
 
@@ -14,7 +15,7 @@ export const usePropertiesBrowser = (initialSearch: string): Browser => {
     name: PROPERTIES_BROWSER_ID,
     icon: IvyIcons.ChangeType,
     browser,
-    infoProvider: row => (row?.original.data ? (row?.original.data as WsPropertyMeta).description : ''),
+    infoProvider: row => <PropertyInfo property={row?.original.data as WsPropertyMeta} />,
     applyModifier: row => ({ value: row?.original.value ?? '' })
   };
 };
@@ -22,8 +23,22 @@ export const usePropertiesBrowser = (initialSearch: string): Browser => {
 const propertiesToBrowserNode = (prop: WsPropertyMeta): BrowserNode<WsPropertyMeta> => {
   return {
     value: prop.property,
-    info: prop.description,
+    info: prop.description ?? '',
     data: prop,
     children: []
   };
+};
+
+const PropertyInfo = ({ property }: { property?: WsPropertyMeta }) => {
+  const { t } = useTranslation();
+  if (!property) {
+    return null;
+  }
+  return (
+    <Flex direction='column' gap={1}>
+      <span>{property.description}</span>
+      {property.defaultValue && <span>{t('label.defaultValue', { defaultValue: property.defaultValue })}</span>}
+      {property.examples?.length > 0 && <span>{t('label.examples', { examples: property.examples.join(', ') })}</span>}
+    </Flex>
+  );
 };
