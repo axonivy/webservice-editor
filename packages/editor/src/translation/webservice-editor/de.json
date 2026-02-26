@@ -60,7 +60,9 @@
       "ntlm": "NTLM",
       "wsSecurity": "WS Security"
     },
+    "defaultValue": "Standardwert: {{defaultValue}}",
     "endpoint": "Endpunkt-URI",
+    "examples": "Beispiele: {{examples}}",
     "moveDown": "Nach unten verschieben",
     "moveUp": "Nach oben verschieben",
     "noWebServiceSelected": "Kein Web Service ausgewählt",

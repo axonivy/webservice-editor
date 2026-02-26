@@ -4,14 +4,18 @@ export const META_PROPS = [
   {
     property: 'javax.xml.ws.client.connectionTimeout',
     description:
-      'Specifies the amount of time, in milliseconds, that the consumer will attempt to establish a connection before it times out.\nDefault: 30000'
+      'Specifies the amount of time, in milliseconds, that the consumer will attempt to establish a connection before it times out.',
+    defaultValue: '30000',
+    examples: ['10000', '60000']
   },
   {
     property: 'proxy.host',
-    description: 'The name of the proxy server. Used by the ch.ivyteam.ivy.webservice.exec.cxf.feature.ProxyFeature'
+    description: 'The name of the proxy server. Used by the ch.ivyteam.ivy.webservice.exec.cxf.feature.ProxyFeature',
+    defaultValue: '',
+    examples: []
   },
-  { property: 'username', description: 'The username used to authenticate on the remote web service' },
-  { property: 'password', description: 'The password used to authenticate on the remote web service' }
+  { property: 'username', description: 'The username used to authenticate on the remote web service', defaultValue: '', examples: [] },
+  { property: 'password', description: 'The password used to authenticate on the remote web service', defaultValue: '', examples: [] }
 ] as const satisfies WsPropertyMeta[];
 
 export const META_FEATURES = [

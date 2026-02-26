@@ -81,6 +81,8 @@ export interface WebServiceSaveDataArgs {
   directSave: boolean;
 }
 export interface WsPropertyMeta {
+  defaultValue: string;
   description: string;
+  examples: string[];
   property: string;
 }
