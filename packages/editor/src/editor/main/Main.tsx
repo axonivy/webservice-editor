@@ -30,6 +30,7 @@ import { useTranslation } from 'react-i18next';
 import { useAppContext } from '../../context/AppContext';
 import { useKnownHotkeys } from '../../utils/useKnownHotkeys';
 import { AddWebServiceDialog } from '../dialog/AddWebServiceDialog';
+import { GenerateServiceDialog } from '../dialog/GenerateServiceDialog';
 import './Main.css';
 import { ValidationRow } from './ValidationRow';
 
@@ -160,6 +161,7 @@ export const Main = () => {
 };
 
 const Controls = ({ table, deleteWebService }: { table: ReactTable<WebServiceData>; deleteWebService?: () => void }) => {
+  const { t } = useTranslation();
   const readonly = useReadonly();
   const hotkeys = useKnownHotkeys();
   if (readonly) {
@@ -167,6 +169,14 @@ const Controls = ({ table, deleteWebService }: { table: ReactTable<WebServiceDat
   }
   return (
     <Flex gap={2}>
+      <GenerateServiceDialog>
+        <Button
+          icon={IvyIcons.SettingsCog}
+          aria-label={t('dialog.generateService.title')}
+          disabled={table.getSelectedRowModel().rows.length === 0}
+        />
+      </GenerateServiceDialog>
+      <Separator decorative orientation='vertical' style={{ height: '20px', margin: 0 }} />
       <AddWebServiceDialog table={table}>
         <Button icon={IvyIcons.Plus} aria-label={hotkeys.addWebService.label} />
       </AddWebServiceDialog>
