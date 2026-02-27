@@ -31,7 +31,6 @@ import { useAppContext } from '../../context/AppContext';
 import { useKnownHotkeys } from '../../utils/useKnownHotkeys';
 import { AddWebServiceDialog } from '../dialog/AddWebServiceDialog';
 import { GenerateServiceDialog } from '../dialog/GenerateServiceDialog';
-import './Main.css';
 import { ValidationRow } from './ValidationRow';
 
 export const Main = () => {
@@ -120,7 +119,7 @@ export const Main = () => {
 
   if (data === undefined || data.length === 0) {
     return (
-      <Flex direction='column' alignItems='center' justifyContent='center' style={{ height: '100%' }}>
+      <Flex direction='column' alignItems='center' justifyContent='center' className='h-full'>
         <PanelMessage icon={IvyIcons.Tool} message={t('message.addFirstWebService')} mode='column'>
           <AddWebServiceDialog table={table}>
             <Button size='large' variant='primary' icon={IvyIcons.Plus}>
@@ -133,11 +132,11 @@ export const Main = () => {
   }
 
   return (
-    <Flex direction='column' ref={ref} onClick={resetSelection} className='webservice-editor-main-content'>
+    <Flex direction='column' ref={ref} onClick={resetSelection} className='h-full overflow-auto'>
       <BasicField
         tabIndex={-1}
         ref={firstElement}
-        className='webservice-editor-table-field'
+        className='m-3 min-h-0'
         label={t('label.webServices')}
         control={
           <Controls table={table} deleteWebService={table.getSelectedRowModel().flatRows.length > 0 ? deleteWebService : undefined} />
@@ -145,7 +144,7 @@ export const Main = () => {
         onClick={event => event.stopPropagation()}
       >
         {globalFilter.filter}
-        <div className='webservice-editor-table-container'>
+        <div className='overflow-x-hidden'>
           <Table onKeyDown={e => handleKeyDown(e, () => setDetail(!detail))}>
             <TableResizableHeader headerGroups={table.getHeaderGroups()} onClick={resetSelection} />
             <TableBody>
@@ -176,11 +175,11 @@ const Controls = ({ table, deleteWebService }: { table: ReactTable<WebServiceDat
           disabled={table.getSelectedRowModel().rows.length === 0}
         />
       </GenerateServiceDialog>
-      <Separator decorative orientation='vertical' style={{ height: '20px', margin: 0 }} />
+      <Separator decorative orientation='vertical' className='m-0! h-5!' />
       <AddWebServiceDialog table={table}>
         <Button icon={IvyIcons.Plus} aria-label={hotkeys.addWebService.label} />
       </AddWebServiceDialog>
-      <Separator decorative orientation='vertical' style={{ height: '20px', margin: 0 }} />
+      <Separator decorative orientation='vertical' className='m-0! h-5!' />
       <TooltipProvider>
         <Tooltip>
           <TooltipTrigger asChild>

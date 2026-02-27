@@ -12,7 +12,7 @@ export class Main {
   readonly table: Table;
 
   constructor(readonly page: Page) {
-    this.locator = page.locator('.webservice-editor-main-content');
+    this.locator = page.locator('#webservice-editor-main');
     this.add = this.locator.getByRole('button', { name: 'Add Web Service' });
     this.delete = this.locator.getByRole('button', { name: 'Delete Web Service' });
     this.generate = this.locator.getByRole('button', { name: 'Generate Service' });
