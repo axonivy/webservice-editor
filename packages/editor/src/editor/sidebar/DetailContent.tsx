@@ -5,7 +5,6 @@ import { useTranslation } from 'react-i18next';
 import { useAppContext } from '../../context/AppContext';
 import { useValidations } from '../../hooks/useValidation';
 import { AuthenticationPart } from './AuthenticationPart';
-import './DetailContent.css';
 import { FeaturesTable } from './components/FeaturesTable';
 import { NameInput } from './components/NameInput';
 import { PropertiesTable } from './components/PropertiesTable';
@@ -32,7 +31,7 @@ export const DetailContent = () => {
   const nameMessage = fieldMessage(validations, webservice.name, 'name');
 
   return (
-    <Flex direction='column' gap={3} className='webservice-editor-detail-content'>
+    <Flex direction='column' gap={3} className='min-h-0 overflow-auto p-3'>
       <BasicCollapsible label={t('common.label.details')} defaultOpen>
         <Flex direction='column' gap={3}>
           <BasicField label={t('common.label.id')} message={idMessage}>

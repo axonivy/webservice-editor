@@ -62,7 +62,7 @@ export const AuthenticationPart = ({ webService, handleAttributeChange }: Authen
 
   return (
     <Flex direction='column' gap={3}>
-      <RadioGroup value={value} onValueChange={change => onAuthenticationChange(change as AuthenticationType)} style={{ flexWrap: 'wrap' }}>
+      <RadioGroup value={value} onValueChange={change => onAuthenticationChange(change as AuthenticationType)} className='flex-wrap'>
         <Field direction='row' alignItems='center' gap={2}>
           <RadioGroupItem value='none' />
           <Label>{t('label.authentication.none')}</Label>

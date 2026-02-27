@@ -5,3 +5,4 @@ export * from './query/query-client';
 export * from './query/QueryProvider';
 export { default as deMessages } from './translation/webservice-editor/de.json';
 export { default as enMessages } from './translation/webservice-editor/en.json';
+import './index.css';
