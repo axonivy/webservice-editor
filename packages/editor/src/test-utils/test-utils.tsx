@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
+import { ReadonlyProvider } from '@axonivy/ui-components';
 import {
+  type ValidationResult,
   type WebServiceContext,
   type WebServiceData,
-  type WebServiceMetaRequestTypes,
-  type ValidationResult
+  type WebServiceMetaRequestTypes
 } from '@axonivy/webservice-editor-protocol';
-import { ReadonlyProvider } from '@axonivy/ui-components';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { render, renderHook, type RenderHookOptions, type RenderOptions, type RenderResult } from '@testing-library/react';
 import i18n from 'i18next';
@@ -29,6 +29,7 @@ type ContextHelperProps = {
 const initTranslation = () => {
   if (i18n.isInitializing || i18n.isInitialized) return;
   i18n.use(initReactI18next).init({
+    showSupportNotice: false,
     supportedLngs: ['en'],
     fallbackLng: 'en',
     ns: ['webservice-editor'],
