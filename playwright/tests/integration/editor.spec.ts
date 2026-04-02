@@ -28,7 +28,7 @@ test('save data', async ({ page, browserName }, testInfo) => {
   await expect(editor.detail.header).toHaveText(newWebServiceName);
 
   const changeName = `change-${browserName}-${testInfo.retry}`;
-  await editor.detail.name.locator.fill(changeName);
+  await editor.detail.name.fill(changeName);
   await row.expectToHaveColumnValues(changeName, '');
 
   await page.reload();
@@ -80,7 +80,7 @@ test('add', async ({ page }) => {
   await editor.main.table.row(5).expectToHaveColumnValues('NewWebService');
   await editor.main.table.row(5).expectToBeSelected();
   await expect(editor.detail.header).toHaveText('NewWebService');
-  await expect(editor.detail.id).toHaveValue(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i);
+  await expect(editor.detail.key.locator).toHaveValue('NewWebService');
   await editor.main.delete.click();
   await editor.main.table.expectToHaveRowCount(5);
 });

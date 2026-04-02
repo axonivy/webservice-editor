@@ -10,8 +10,8 @@ export class Detail {
   readonly locator: Locator;
   readonly header: Locator;
   readonly help: Locator;
-  readonly id: Locator;
-  readonly name: Textbox;
+  readonly key: Textbox;
+  readonly name: Locator;
   readonly description: Locator;
   readonly icon: Locator;
   readonly authSection: Section;
@@ -31,8 +31,8 @@ export class Detail {
     this.locator = this.page.locator('#webservice-editor-detail');
     this.header = this.locator.locator('.ui-sidebar-header');
     this.help = this.locator.getByRole('button', { name: 'Open Help' });
-    this.id = this.locator.getByLabel('ID', { exact: true });
-    this.name = new Textbox(this.locator, { name: 'Name' });
+    this.key = new Textbox(this.locator, { name: 'Key' });
+    this.name = this.locator.getByLabel('Name', { exact: true });
     this.description = this.locator.getByLabel('Description', { exact: true });
     this.icon = this.locator.getByLabel('Icon', { exact: true });
 

@@ -11,17 +11,17 @@ test('edit details', async ({ page }) => {
   const editor = await WebServiceEditor.openMock(page);
   await editor.main.table.row(0).locator.click();
   await expect(editor.detail.header).toHaveText('personService');
-  await expect(editor.detail.id).toBeDisabled();
-  await expect(editor.detail.name.locator).toHaveValue('personService');
+  await expect(editor.detail.key.locator).toBeDisabled();
+  await expect(editor.detail.name).toHaveValue('personService');
   await expect(editor.detail.description).toBeEmpty();
   await expect(editor.detail.icon).toBeEmpty();
 
-  await editor.detail.name.locator.fill('Updated service');
+  await editor.detail.name.fill('Updated service');
   await editor.detail.description.fill('desc');
   await editor.detail.icon.fill('file://icon');
 
   await expect(editor.detail.header).toHaveText('Updated service');
-  await expect(editor.detail.name.locator).toHaveValue('Updated service');
+  await expect(editor.detail.name).toHaveValue('Updated service');
   await expect(editor.detail.description).toHaveValue('desc');
   await expect(editor.detail.icon).toHaveValue('file://icon');
 });

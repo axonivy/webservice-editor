@@ -6,7 +6,6 @@ import { useAppContext } from '../../context/AppContext';
 import { useValidations } from '../../hooks/useValidation';
 import { AuthenticationPart } from './AuthenticationPart';
 import { FeaturesTable } from './components/FeaturesTable';
-import { NameInput } from './components/NameInput';
 import { PropertiesTable } from './components/PropertiesTable';
 import { Service } from './components/Service';
 
@@ -14,7 +13,7 @@ export const DetailContent = () => {
   const { t } = useTranslation();
   const { data, setData, selectedIndex } = useAppContext();
   const webservice = useMemo(() => data[selectedIndex], [data, selectedIndex]);
-  const validations = useValidations(webservice?.name ?? '');
+  const validations = useValidations(webservice?.key ?? '');
   if (webservice === undefined) {
     return <PanelMessage message={t('label.noWebServiceSelected')} />;
   }
@@ -27,22 +26,18 @@ export const DetailContent = () => {
       return structuredClone(old);
     });
 
-  const idMessage = fieldMessage(validations, webservice.name, 'id');
-  const nameMessage = fieldMessage(validations, webservice.name, 'name');
+  const keyMessage = fieldMessage(validations, webservice, 'key');
 
   return (
     <Flex direction='column' gap={3} className='min-h-0 overflow-auto p-3'>
       <BasicCollapsible label={t('common.label.details')} defaultOpen>
         <Flex direction='column' gap={3}>
-          <BasicField label={t('common.label.id')} message={idMessage}>
-            <BasicInput value={webservice.id} disabled />
+          <BasicField label={t('common.label.key')} message={keyMessage}>
+            <BasicInput value={webservice.key} disabled />
           </BasicField>
-          <NameInput
-            value={webservice.name}
-            onChange={value => handleAttributeChange('name', value)}
-            webServices={data.filter(u => u.name !== webservice.name)}
-            message={nameMessage}
-          />
+          <BasicField label={t('common.label.name')}>
+            <BasicInput value={webservice.name} onChange={event => handleAttributeChange('name', event.target.value)} />
+          </BasicField>
           <BasicField label={t('common.label.description')}>
             <BasicInput value={webservice.description} onChange={event => handleAttributeChange('description', event.target.value)} />
           </BasicField>
@@ -57,7 +52,7 @@ export const DetailContent = () => {
       <FeaturesTable
         data={webservice.features}
         onChange={change => handleAttributeChange('features', change)}
-        validationPath={webservice.name}
+        validationPath={webservice.key}
       />
       <PropertiesTable data={webservice.properties} onChange={change => handleAttributeChange('properties', change)} />
       <BasicCollapsible label={t('label.endpoint')}>
@@ -67,7 +62,7 @@ export const DetailContent = () => {
   );
 };
 
-const fieldMessage = (validations: Array<ValidationResult>, webserviceName: string, field: keyof WebServiceData) =>
+const fieldMessage = (validations: Array<ValidationResult>, webservice: WebServiceData, field: keyof WebServiceData) =>
   validations
-    .filter(v => v.path.startsWith(`${webserviceName}.${field}`))
-    .map<MessageData>(v => ({ message: v.message, variant: v.severity.toLocaleLowerCase() as Lowercase<Severity> }))[0];
+    .filter(v => v.path.toLowerCase().startsWith(`${webservice.key}.${field}`.toLowerCase()))
+    .map<MessageData>(v => ({ message: v.message, variant: v.severity.toLowerCase() as Lowercase<Severity> }))[0];
