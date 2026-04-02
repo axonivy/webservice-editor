@@ -3,7 +3,7 @@ import type { WebServiceData } from '@axonivy/webservice-editor-protocol';
 export const data: Array<WebServiceData> = [
   {
     name: 'personService',
-    id: '16150E44A158D09C',
+    key: 'personService',
     description: '',
     icon: '',
     features: ['ch.ivyteam.ivy.webservice.exec.cxf.feature.HttpBasicAuthenticationFeature'],
@@ -25,7 +25,7 @@ export const data: Array<WebServiceData> = [
   },
   {
     name: 'technicalBackend',
-    id: '162B962523BAAB85',
+    key: 'technicalBackend',
     description: '',
     icon: '',
     features: [],
@@ -48,7 +48,7 @@ export const data: Array<WebServiceData> = [
   },
   {
     name: 'smartbearTests',
-    id: '162B97C859B22CA3',
+    key: 'smartbearTests',
     description: '',
     icon: '',
     features: [],
@@ -76,7 +76,7 @@ export const data: Array<WebServiceData> = [
   },
   {
     name: 'interceptedService',
-    id: '16D2A643A3A25C52',
+    key: 'interceptedService',
     description: '',
     icon: '',
     features: [],
@@ -99,7 +99,7 @@ export const data: Array<WebServiceData> = [
   },
   {
     name: 'interceptedPersonService',
-    id: '16330E44A158D09C',
+    key: 'interceptedPersonService',
     description: '',
     icon: '',
     features: [

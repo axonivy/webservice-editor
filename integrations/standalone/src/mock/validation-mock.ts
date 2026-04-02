@@ -1,22 +1,22 @@
-import type { WebServiceData, ValidationResult } from '@axonivy/webservice-editor-protocol';
+import type { ValidationResult, WebServiceData } from '@axonivy/webservice-editor-protocol';
 
 export const validateMock = (data: Array<WebServiceData>): Array<ValidationResult> => {
   const validations: Array<ValidationResult> = [];
   data.forEach(webService => {
-    if (webService.name.includes('#')) {
+    if (webService.key.includes('invalid-')) {
       validations.push(
         {
-          path: `${webService.name}.name`,
-          message: `WebService ${webService.name} contains invalid characters`,
+          path: `${webService.key}.key`,
+          message: `WebService ${webService.key} contains invalid characters`,
           severity: 'ERROR'
         },
         {
-          path: `${webService.name}.uri`,
+          path: `${webService.key}.uri`,
           message: 'URI empty',
           severity: 'ERROR'
         },
         {
-          path: `${webService.name}.features.bla`,
+          path: `${webService.key}.features.bla`,
           message: 'Features unknown',
           severity: 'WARNING'
         }

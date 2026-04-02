@@ -1,13 +1,13 @@
 import type { WebServiceData } from '@axonivy/webservice-editor-protocol';
 import { customRenderHook } from 'test-utils';
-import { useValidateName } from './useValidateAddWebService';
+import { useValidateKey } from './useValidateKey';
 
 const data: Array<WebServiceData> = [
   {
     name: 'Employee',
     description: '',
     icon: '',
-    id: '1',
+    key: 'Employee',
     features: [],
     properties: [],
     codegen: { wsdlUrl: '', underscoreNames: false, namespaceMappings: {} },
@@ -17,7 +17,7 @@ const data: Array<WebServiceData> = [
     name: 'Teamleader',
     description: '',
     icon: '',
-    id: '2',
+    key: 'Teamleader',
     features: [],
     properties: [],
     codegen: { wsdlUrl: '', underscoreNames: false, namespaceMappings: {} },
@@ -25,8 +25,8 @@ const data: Array<WebServiceData> = [
   }
 ];
 
-const validate = (name: string) => {
-  const { result } = customRenderHook(() => useValidateName(name, data));
+const validate = (key: string) => {
+  const { result } = customRenderHook(() => useValidateKey(key, data));
   return result.current;
 };
 

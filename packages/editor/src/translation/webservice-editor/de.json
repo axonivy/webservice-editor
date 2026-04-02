@@ -19,8 +19,8 @@
       "features": "Funktionen",
       "generate": "Generieren",
       "icon": "Symbol",
-      "id": "ID",
       "info": "Info",
+      "key": "Schlüssel",
       "name": "Name",
       "namespace": "Namespace",
       "password": "Passwort",
@@ -86,6 +86,7 @@
     "endpointInfoDescription": "Die erste URL ist die Standard-URL, gefolgt von Fallback-Endpunkten.",
     "errorOnly": "Fehler: {{error}}",
     "notFound": "Nicht gefunden",
+    "sanitizedKey": "Bereinigter Schlüssel wird '{{key}}' sein.",
     "serviceClassMissing": "Bitte generieren Sie zuerst Ihren Web Service-Client aus einer WSDL, um die Endpunkte zu bearbeiten.",
     "webserviceAlreadyExists": "Web Service existiert bereits."
   },

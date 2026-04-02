@@ -48,7 +48,7 @@ export interface WebServiceData {
   description: string;
   features: string[];
   icon: string;
-  id: string;
+  key: string;
   name: string;
   properties: WsClientProperty[];
   service: WsService;

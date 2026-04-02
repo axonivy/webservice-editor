@@ -19,8 +19,8 @@
       "features": "Features",
       "generate": "Generate",
       "icon": "Icon",
-      "id": "ID",
       "info": "Info",
+      "key": "Key",
       "name": "Name",
       "namespace": "Namespace",
       "password": "Password",
@@ -86,6 +86,7 @@
     "endpointInfoDescription": "The first URL is the default, followed by fallback endpoints.",
     "errorOnly": "Error: {{error}}",
     "notFound": "Not Found",
+    "sanitizedKey": "Sanitized key will be '{{key}}'.",
     "serviceClassMissing": "Please generate your Web Service client first from a WSDL to edit the endpoints.",
     "webserviceAlreadyExists": "Web Service already exists."
   },

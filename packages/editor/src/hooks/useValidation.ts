@@ -6,5 +6,5 @@ export function useValidations(path: string): ValidationResult[] {
   if (path === '') {
     return [];
   }
-  return validations.filter(val => val.path?.startsWith(path));
+  return validations.filter(val => val.path?.toLowerCase()?.startsWith(path.toLowerCase()));
 }
