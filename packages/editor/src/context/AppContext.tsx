@@ -1,6 +1,6 @@
 import { type useHistoryData } from '@axonivy/ui-components';
-import { type WebServiceContext, type WebServiceData, type ValidationResult } from '@axonivy/webservice-editor-protocol';
-import { createContext, useContext } from 'react';
+import { type ValidationResult, type WebServiceContext, type WebServiceData } from '@axonivy/webservice-editor-protocol';
+import { createContext, use } from 'react';
 import type { UpdateConsumer } from '../types/types';
 
 export type AppContext = {
@@ -16,7 +16,7 @@ export type AppContext = {
   helpUrl: string;
 };
 
-export const appContext = createContext<AppContext>({
+export const AppContext = createContext<AppContext>({
   data: [],
   setData: data => data,
   selectedIndex: -1,
@@ -29,10 +29,10 @@ export const appContext = createContext<AppContext>({
   helpUrl: ''
 });
 
-export const AppProvider = appContext.Provider;
+export const AppProvider = AppContext.Provider;
 
 export const useAppContext = (): AppContext & { setUnhistoriedVariables: UpdateConsumer<Array<WebServiceData>> } => {
-  const context = useContext(appContext);
+  const context = use(AppContext);
   return {
     ...context,
     setData: updateData => {
