@@ -1,6 +1,8 @@
 import { expect, test } from '@playwright/test';
 import { WebServiceEditor } from '../page-objects/WebServiceEditor';
 
+const ICON_DISPLAY_VALUE = 'res:/webContent/icons/microsoft.svg';
+
 test('empty', async ({ page }) => {
   const editor = await WebServiceEditor.openMock(page);
   await expect(editor.detail.header).toHaveText('Web Service');
@@ -14,16 +16,15 @@ test('edit details', async ({ page }) => {
   await expect(editor.detail.key.locator).toBeDisabled();
   await expect(editor.detail.name).toHaveValue('personService');
   await expect(editor.detail.description).toBeEmpty();
-  await expect(editor.detail.icon).toBeEmpty();
 
   await editor.detail.name.fill('Updated service');
   await editor.detail.description.fill('desc');
-  await editor.detail.icon.fill('file://icon');
+  await editor.detail.icon.locator.fill('file://icon');
 
   await expect(editor.detail.header).toHaveText('Updated service');
   await expect(editor.detail.name).toHaveValue('Updated service');
   await expect(editor.detail.description).toHaveValue('desc');
-  await expect(editor.detail.icon).toHaveValue('file://icon');
+  await expect(editor.detail.icon.locator).toHaveValue('file://icon');
 });
 
 test('edit authentication type', async ({ page }) => {
@@ -163,4 +164,35 @@ test('edit endpoints', async ({ page }) => {
   await editor.detail.endpointSection.content.getByRole('button', { name: 'Remove Row' }).click();
   await editor.detail.endpointUrls.expectToHaveRowCount(1);
   await editor.detail.endpointUrls.expectToHaveRowValues(['http://example.com']);
+});
+
+test('icon chooser', async ({ page }) => {
+  const editor = await WebServiceEditor.openMock(page);
+  await editor.main.table.row(0).locator.click();
+  await expect(editor.detail.icon.locator).toHaveValue('');
+
+  await editor.detail.icon.choose('microsoft');
+  await expect(editor.detail.icon.locator).toHaveValue(ICON_DISPLAY_VALUE);
+  const selectedRow = editor.main.table.row(0);
+  const iconInRow = selectedRow.locator.locator('img');
+  await expect(iconInRow).toHaveAttribute('src', '/icons/microsoft.svg');
+  await expect(iconInRow).toHaveAttribute('alt', 'icon');
+});
+
+test('icon chooser client', async ({ page }) => {
+  const editor = await WebServiceEditor.openWebService(page);
+  await editor.main.table.row(0).locator.click();
+  await expect(editor.detail.icon.locator).toHaveValue('');
+
+  await editor.detail.icon.choose('microsoft');
+  await expect(editor.detail.icon.locator).toHaveValue(ICON_DISPLAY_VALUE);
+  const selectedRow = editor.main.table.row(0);
+  const iconInRow = selectedRow.locator.locator('img');
+  for (const img of await iconInRow.all()) {
+    await expect(img).toHaveJSProperty('complete', true);
+    await expect(img).not.toHaveJSProperty('naturalWidth', 0);
+  }
+  await editor.detail.icon.locator.fill('');
+  await editor.main.table.row(0).locator.click();
+  await expect(editor.detail.icon.locator).toHaveValue('');
 });

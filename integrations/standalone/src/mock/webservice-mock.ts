@@ -9,7 +9,7 @@ import type {
   WebServiceSaveDataArgs
 } from '@axonivy/webservice-editor-protocol';
 import { data } from './data-mock';
-import { META_FEATURES, META_PROPS } from './meta.mock';
+import { META_FEATURES, META_ICONS, META_PROPS } from './meta.mock';
 import { validateMock } from './validation-mock';
 
 export class WebServiceMock implements WebServiceClient {
@@ -55,6 +55,8 @@ export class WebServiceMock implements WebServiceClient {
         return Promise.resolve(META_PROPS);
       case 'meta/features/all':
         return Promise.resolve(META_FEATURES);
+      case 'meta/icons/all':
+        return Promise.resolve(META_ICONS);
       default:
         throw Error('mock meta path not programmed');
     }

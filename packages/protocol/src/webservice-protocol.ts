@@ -5,6 +5,7 @@ import type {
   ValidationResult,
   WebServiceContext,
   WebServiceEditorData,
+  WebServiceIcon,
   WebServiceSaveDataArgs,
   WsPropertyMeta
 } from './data/webservice';
@@ -18,6 +19,7 @@ export interface WebServiceActionArgs {
 export interface WebServiceMetaRequestTypes {
   'meta/properties/all': [void, Array<WsPropertyMeta>];
   'meta/features/all': [WebServiceContext, Array<JavaType>];
+  'meta/icons/all': [WebServiceContext, Array<WebServiceIcon>];
 }
 
 export interface WebServiceRequestTypes extends WebServiceMetaRequestTypes {

@@ -13,7 +13,7 @@ export class Detail {
   readonly key: Textbox;
   readonly name: Locator;
   readonly description: Locator;
-  readonly icon: Locator;
+  readonly icon: Select;
   readonly authSection: Section;
   readonly authenticationType: RadioGroup;
   readonly username: Locator;
@@ -34,7 +34,7 @@ export class Detail {
     this.key = new Textbox(this.locator, { name: 'Key' });
     this.name = this.locator.getByLabel('Name', { exact: true });
     this.description = this.locator.getByLabel('Description', { exact: true });
-    this.icon = this.locator.getByLabel('Icon', { exact: true });
+    this.icon = new Select(page, this.locator, { label: 'Icon' });
 
     this.authSection = new Section(page, this.locator, 'Authentication');
     this.authenticationType = new RadioGroup(this.authSection.content);
