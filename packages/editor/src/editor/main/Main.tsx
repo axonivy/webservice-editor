@@ -28,6 +28,7 @@ import { getCoreRowModel, useReactTable, type ColumnDef, type Table as ReactTabl
 import { useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAppContext } from '../../context/AppContext';
+import { useMeta } from '../../hooks/useMeta';
 import { useKnownHotkeys } from '../../utils/useKnownHotkeys';
 import { AddWebServiceDialog } from '../dialog/AddWebServiceDialog';
 import { GenerateServiceDialog } from '../dialog/GenerateServiceDialog';
@@ -35,7 +36,8 @@ import { ValidationRow } from './ValidationRow';
 
 export const Main = () => {
   const { t } = useTranslation();
-  const { data, setData, setSelectedIndex, detail, setDetail } = useAppContext();
+  const { data, setData, setSelectedIndex, detail, setDetail, context } = useAppContext();
+  const iconMeta = useMeta('meta/icons/all', context);
 
   const selection = useTableSelect<WebServiceData>({
     onSelect: selectedRows => {
@@ -54,12 +56,15 @@ export const Main = () => {
       {
         accessorKey: 'name',
         header: ({ column }) => <SortableHeader column={column} name={t('common.label.name')} />,
-        cell: cell => (
-          <Flex alignItems='center' gap={1}>
-            {<IvyIcon icon={IvyIcons.WsStart} />}
-            <span>{cell.getValue()}</span>
-          </Flex>
-        )
+        cell: cell => {
+          const iconPath = iconMeta.data?.find(icon => icon.relativePath === cell.row.original.icon)?.path;
+          return (
+            <Flex alignItems='center' gap={1}>
+              {iconPath ? <img src={iconPath} alt='icon' className='size-3' /> : <IvyIcon icon={IvyIcons.RestClient} />}
+              <span>{cell.getValue()}</span>
+            </Flex>
+          );
+        }
       },
       {
         id: 'uri',
@@ -72,7 +77,7 @@ export const Main = () => {
         )
       }
     ],
-    [t]
+    [t, iconMeta.data]
   );
 
   const table = useReactTable({

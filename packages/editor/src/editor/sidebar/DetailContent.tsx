@@ -1,8 +1,9 @@
-import { BasicCollapsible, BasicField, BasicInput, Flex, PanelMessage, type MessageData } from '@axonivy/ui-components';
+import { BasicCollapsible, BasicField, BasicInput, Combobox, Flex, PanelMessage, type MessageData } from '@axonivy/ui-components';
 import type { Severity, ValidationResult, WebServiceData } from '@axonivy/webservice-editor-protocol';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAppContext } from '../../context/AppContext';
+import { useMeta } from '../../hooks/useMeta';
 import { useValidations } from '../../hooks/useValidation';
 import { AuthenticationPart } from './AuthenticationPart';
 import { FeaturesTable } from './components/FeaturesTable';
@@ -11,9 +12,10 @@ import { Service } from './components/Service';
 
 export const DetailContent = () => {
   const { t } = useTranslation();
-  const { data, setData, selectedIndex } = useAppContext();
+  const { data, setData, selectedIndex, context } = useAppContext();
   const webservice = useMemo(() => data[selectedIndex], [data, selectedIndex]);
   const validations = useValidations(webservice?.key ?? '');
+  const iconMeta = useMeta('meta/icons/all', context);
   if (webservice === undefined) {
     return <PanelMessage message={t('label.noWebServiceSelected')} />;
   }
@@ -27,6 +29,7 @@ export const DetailContent = () => {
     });
 
   const keyMessage = fieldMessage(validations, webservice, 'key');
+  const iconOptions = iconMeta.data?.map(icon => ({ icon: icon.path, label: icon.name, value: icon.relativePath })) ?? [];
 
   return (
     <Flex direction='column' gap={3} className='min-h-0 overflow-auto p-3'>
@@ -42,7 +45,22 @@ export const DetailContent = () => {
             <BasicInput value={webservice.description} onChange={event => handleAttributeChange('description', event.target.value)} />
           </BasicField>
           <BasicField label={t('common.label.icon')}>
-            <BasicInput value={webservice.icon} onChange={event => handleAttributeChange('icon', event.target.value)} />
+            <Flex alignItems='center' gap={2} className='w-full *:last:grow'>
+              <div className='flex size-9.25 items-center justify-center rounded-sm border border-n200'>
+                {webservice.icon && <img src={iconOptions.find(option => option.value === webservice.icon)?.icon} className='size-6' />}
+              </div>
+              <Combobox
+                itemRender={item => (
+                  <Flex alignItems='center' gap={1}>
+                    <img src={item.icon} className='size-3' />
+                    <span>{item.label}</span>
+                  </Flex>
+                )}
+                onChange={value => handleAttributeChange('icon', value)}
+                options={iconOptions}
+                value={webservice.icon}
+              />
+            </Flex>
           </BasicField>
         </Flex>
       </BasicCollapsible>

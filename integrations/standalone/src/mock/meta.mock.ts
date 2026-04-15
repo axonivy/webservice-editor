@@ -1,4 +1,4 @@
-import type { JavaType, WsPropertyMeta } from '@axonivy/webservice-editor-protocol';
+import type { JavaType, WebServiceIcon, WsPropertyMeta } from '@axonivy/webservice-editor-protocol';
 
 export const META_PROPS = [
   {
@@ -30,3 +30,7 @@ export const META_FEATURES = [
     fullQualifiedName: 'ch.ivyteam.ivy.webservice.exec.cxf.feature.ProxyFeature'
   }
 ] as const satisfies JavaType[];
+
+export const META_ICONS = [
+  { name: 'microsoft', path: '/icons/microsoft.svg', relativePath: 'res:/webContent/icons/microsoft.svg' }
+] as const satisfies WebServiceIcon[];

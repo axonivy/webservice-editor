@@ -15,6 +15,7 @@ export interface Webservices {
   validationResult: ValidationResult[];
   webServiceContext: WebServiceContext;
   webServiceEditorData: WebServiceEditorData;
+  webServiceIcon: WebServiceIcon[];
   webServiceSaveDataArgs: WebServiceSaveDataArgs;
   wsPropertyMeta: WsPropertyMeta[];
   [k: string]: unknown;
@@ -74,6 +75,11 @@ export interface WsPort {
   fallbackLocationUris: string[];
   locationUri: string;
   name: string;
+}
+export interface WebServiceIcon {
+  name: string;
+  path: string;
+  relativePath: string;
 }
 export interface WebServiceSaveDataArgs {
   context: WebServiceContext;
