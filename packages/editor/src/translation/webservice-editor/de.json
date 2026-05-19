@@ -52,7 +52,6 @@
     "createTooltip": "Halte {{modifier}} gedrückt, um einen weiteren Web Service hinzuzufügen.",
     "generateService": {
       "desc": "Generieren Sie einen neuen Web Service-Client aus einer WSDL.",
-      "notYetImplemented": "Diese Funktion ist noch nicht implementiert.",
       "title": "Service generieren",
       "underscoreOption": "Unterstriche in Namen beibehalten",
       "wsdlUri": "WSDL-URI"

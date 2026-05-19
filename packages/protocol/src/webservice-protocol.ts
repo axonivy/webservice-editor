@@ -7,13 +7,18 @@ import type {
   WebServiceEditorData,
   WebServiceIcon,
   WebServiceSaveDataArgs,
+  WsCodegenOpts,
   WsPropertyMeta
 } from './data/webservice';
 
 export interface WebServiceActionArgs {
-  actionId: 'openUrl';
+  actionId: 'openUrl' | 'generateCxfClient';
   context: WebServiceContext;
-  payload: string;
+  payload: string | WsGeneratorConfig;
+}
+
+export interface WsGeneratorConfig extends WsCodegenOpts {
+  clientName: string;
 }
 
 export interface WebServiceMetaRequestTypes {

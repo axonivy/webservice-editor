@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test, type Page } from '@playwright/test';
 import { AddWebServiceDialog } from '../page-objects/AddWebServiceDialog';
 import { WebServiceEditor } from '../page-objects/WebServiceEditor';
 
@@ -109,10 +109,24 @@ test('generate service', async ({ page }) => {
   await expect(editor.main.generate).toBeEnabled();
 
   const dialog = await editor.main.openGenerateServiceDialog();
-  await expect(dialog.namespaceInput).toBeDisabled();
-  await expect(dialog.underscoreOption).toBeDisabled();
-
   await dialog.fileInput.fill('http://example.com/service?wsdl');
   await expect(dialog.namespaceInput).toBeEnabled();
   await expect(dialog.underscoreOption).toBeEnabled();
+
+  const msg = consoleLog(page);
+  await dialog.submitButton.click();
+
+  expect(await msg).toContain('"actionId":"generateCxfClient"');
+  expect(await msg).toContain('\\"clientName\\":\\"personService\\"');
+  expect(await msg).toContain('\\"wsdlUrl\\":\\"http://example.com/service?wsdl\\"');
 });
+
+const consoleLog = async (page: Page) => {
+  return new Promise(result => {
+    page.on('console', msg => {
+      if (msg.type() === 'log') {
+        result(msg.text());
+      }
+    });
+  });
+};
