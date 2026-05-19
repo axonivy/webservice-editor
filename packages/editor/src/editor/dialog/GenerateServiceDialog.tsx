@@ -8,7 +8,6 @@ import {
   DialogContent,
   DialogTrigger,
   Flex,
-  Message,
   Tooltip,
   TooltipContent,
   TooltipProvider,
@@ -16,9 +15,11 @@ import {
   useDialogHotkeys
 } from '@axonivy/ui-components';
 import { IvyIcons } from '@axonivy/ui-icons';
+import type { WsCodegenOpts } from '@axonivy/webservice-editor-protocol';
 import { useRef, useState, type ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAppContext } from '../../context/AppContext';
+import { useAction } from '../../hooks/useAction';
 
 const DIALOG_HOTKEY_IDS = ['generateServiceDialog'];
 
@@ -45,34 +46,40 @@ export const GenerateServiceDialog = ({ children }: { children: ReactNode }) => 
 const GenerateDialogContent = () => {
   const { t } = useTranslation();
   const { data, setData, selectedIndex } = useAppContext();
+  const generateCxfClient = useAction('generateCxfClient');
+  const selectedClient = data[selectedIndex];
+  const initCodegen: WsCodegenOpts = selectedClient?.codegen ?? {
+    wsdlUrl: '',
+    namespaceMappings: {},
+    underscoreNames: false
+  };
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const [filePath, setFilePath] = useState('');
-  const [namespace, setNamespace] = useState('');
-  const [underscoreNames, setUnderscoreNames] = useState(false);
+  const [codegen, setCodegen] = useState<WsCodegenOpts>(initCodegen);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
-      setFilePath(file.name);
+      setCodegen(prev => ({ ...prev, wsdlUrl: file.name }));
     }
   };
 
   const generate = () => {
     const currentClient = data[selectedIndex];
-    if (!currentClient) {
+    if (!currentClient || !codegen.wsdlUrl) {
       return;
     }
+
+    generateCxfClient({
+      clientName: currentClient.name,
+      ...codegen
+    });
 
     setData(currentData =>
       currentData.map((client, index) =>
         index === selectedIndex
           ? {
               ...client,
-              codegen: {
-                wsdlUrl: filePath,
-                namespaceMappings: {},
-                underscoreNames
-              }
+              codegen
             }
           : client
       )
@@ -87,7 +94,7 @@ const GenerateDialogContent = () => {
         <Button
           variant='primary'
           size='large'
-          disabled={true}
+          disabled={!codegen.wsdlUrl.trim()}
           icon={IvyIcons.SettingsCog}
           aria-label={t('common.label.generate')}
           onClick={generate}
@@ -103,7 +110,6 @@ const GenerateDialogContent = () => {
       tabIndex={-1}
     >
       <Flex direction='column' gap={2}>
-        <Message variant='warning' message={t('dialog.generateService.notYetImplemented')} />
         <BasicField
           control={
             <Button
@@ -116,15 +122,26 @@ const GenerateDialogContent = () => {
           label={t('dialog.generateService.wsdlUri')}
         >
           <input ref={fileInputRef} accept='.wsdl,.xml' type='file' onChange={handleFileChange} hidden />
-          <BasicInput value={filePath} required onChange={event => setFilePath(event.target.value)} />
+          <BasicInput value={codegen.wsdlUrl} required onChange={event => setCodegen(prev => ({ ...prev, wsdlUrl: event.target.value }))} />
         </BasicField>
         <BasicField label={t('common.label.namespace')}>
-          <BasicInput disabled={!filePath} value={namespace} required onChange={event => setNamespace(event.target.value)} />
+          <BasicInput
+            disabled={!codegen.wsdlUrl}
+            value={Object.values(codegen.namespaceMappings)[0] ?? ''}
+            required
+            onChange={event => {
+              const namespaceMappings: WsCodegenOpts['namespaceMappings'] = event.target.value ? { '': event.target.value } : {};
+              setCodegen(prev => ({
+                ...prev,
+                namespaceMappings
+              }));
+            }}
+          />
         </BasicField>
         <BasicCheckbox
-          disabled={!filePath}
-          checked={underscoreNames}
-          onCheckedChange={checked => setUnderscoreNames(checked === true)}
+          disabled={!codegen.wsdlUrl}
+          checked={codegen.underscoreNames}
+          onCheckedChange={checked => setCodegen(prev => ({ ...prev, underscoreNames: checked === true }))}
           label={t('dialog.generateService.underscoreOption')}
         />
       </Flex>
