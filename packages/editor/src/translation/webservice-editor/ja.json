@@ -1,14 +1,96 @@
 {
-  "common": {
-    "hotkey": {},
-    "label": {},
-    "message": {}
-  },
   "dialog": {
-    "addWebService": {}
+    "generateService": {
+      "title": "サービスの生成",
+      "underscoreOption": "名前にアンダースコアをキープ",
+      "desc": "WSDLから新しいWebサービスクライアントを生成します.",
+      "wsdlUri": "WSDL の URI"
+    },
+    "addWebService": {
+      "desc": "新しいWebサービス設定を追加します.",
+      "title": "ウェブサービスの追加"
+    },
+    "browser": {
+      "title": "browser",
+      "description": "利用可能なオプションを参照します.",
+      "loadError": "ブラウザデータをロードできません",
+      "loading": "読み込み中..."
+    },
+    "create": "作成",
+    "createTooltip": "{{modifier}} を実行して、追加の Web サービスを追加します."
   },
-  "hotkey": {},
-  "label": {},
-  "message": {},
-  "title": {}
+  "common": {
+    "label": {
+      "info": "インフォメーション",
+      "key": "キーキー",
+      "apply": "適用",
+      "authentication": "認証",
+      "text": "テキスト",
+      "type": "タイプ",
+      "uri": "ログイン",
+      "username": "ユーザー名",
+      "value": "値",
+      "browse": "ブラウザ",
+      "browser": "ブラウザ",
+      "cancel": "キャンセル",
+      "description": "コンテンツ",
+      "details": "インフォメーション",
+      "features": "特徴:",
+      "generate": "生成する",
+      "icon": "アイコン",
+      "name": "名前",
+      "namespace": "名前空間",
+      "password": "パスワード",
+      "path": "パス",
+      "properties": "プロパティ",
+      "search": "検索"
+    },
+    "hotkey": {
+      "focusInscription": "焦点の徴候({{hotkey}})",
+      "focusMain": "メインをフォーカス ({{hotkey}})",
+      "focusToolbar": "ツールバーをフォーカス ({{hotkey}})",
+      "help": "オープンヘルプ({{hotkey}})",
+      "redo": "やり直す ({{hotkey}})",
+      "undo": "元に戻す ({{hotkey}})"
+    },
+    "message": {
+      "errorOccurred": "エラーが発生しました: {{message}}"
+    }
+  },
+  "message": {
+    "sanitizedKey": "サニタイズされたキーは「{{key}}」になります.",
+    "addFirstWebService": "最初のWebサービスを追加して、起動します.",
+    "emptyName": "お名前を空にすることはできません.",
+    "endpointInfoDescription": "最初の URL はデフォルトで、フォールバックのエンドポイントが続きます.",
+    "errorOnly": "エラー: {{error}}",
+    "notFound": "見つかりません",
+    "serviceClassMissing": "まずはWSDLからWebサービスクライアントを生成し、エンドポイントを編集してください.",
+    "webserviceAlreadyExists": "既にWebサービスが存在しています."
+  },
+  "hotkey": {
+    "addWebService": "Webサービスを追加({{hotkey}})",
+    "deleteWebService": "ウェブサービス削除({{hotkey}})"
+  },
+  "label": {
+    "authentication": {
+      "basic": "基本情報",
+      "digest": "ダイジェスト",
+      "none": "なし",
+      "ntlm": "ログイン",
+      "wsSecurity": "WSセキュリティ"
+    },
+    "defaultValue": "デフォルト値: {{defaultValue}}",
+    "endpoint": "エンドポイント URI",
+    "examples": "例:{{examples}}",
+    "noWebServiceSelected": "ウェブサービスの選択なし",
+    "ports": "ポート",
+    "removeRow": "行を削除",
+    "webServices": "ウェブサービス",
+    "moveDown": "移動ダウン",
+    "moveUp": "移動する"
+  },
+  "title": {
+    "detail": "Web サービス",
+    "main": "Webサービス - {{name}}"
+  }
 }
