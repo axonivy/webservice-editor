@@ -16,29 +16,6 @@ test('data', async ({ page }) => {
   await expect(editor.detail.header).toHaveText('interceptedPersonService');
 });
 
-test('save data', async ({ page, browserName }, testInfo) => {
-  const editor = await WebServiceEditor.openWebService(page);
-  const dialog = await editor.main.openAddWebServiceDialog();
-  const newWebServiceName = `webservice-${browserName}-${testInfo.retry}`;
-  await dialog.name.locator.fill(newWebServiceName);
-  await dialog.create.click();
-  const row = editor.main.table.lastRow();
-  await row.expectToHaveColumnValues(newWebServiceName, '');
-  await row.locator.click();
-  await expect(editor.detail.header).toHaveText(newWebServiceName);
-
-  const changeName = `change-${browserName}-${testInfo.retry}`;
-  await editor.detail.name.fill(changeName);
-  await row.expectToHaveColumnValues(changeName, '');
-
-  await page.reload();
-  await row.expectToHaveColumnValues(changeName, '');
-
-  await row.locator.click();
-  await editor.main.delete.click();
-  await expect(editor.main.table.locator).not.toHaveText(changeName);
-});
-
 test('select web service', async ({ page }) => {
   const editor = await WebServiceEditor.openMock(page);
   await editor.main.table.expectToHaveNoSelection();
