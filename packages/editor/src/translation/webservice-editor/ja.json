@@ -11,25 +11,25 @@
       "title": "ウェブサービスの追加"
     },
     "browser": {
-      "title": "ブラウザ",
+      "title": "browser",
       "description": "利用可能なオプションを参照します.",
       "loadError": "ブラウザデータをロードできません",
-      "loading": "ローディング..."
+      "loading": "読み込み中..."
     },
-    "create": "作成する",
+    "create": "作成",
     "createTooltip": "{{modifier}} を実行して、追加の Web サービスを追加します."
   },
   "common": {
     "label": {
       "info": "インフォメーション",
       "key": "キーキー",
-      "apply": "お問い合わせ",
+      "apply": "適用",
       "authentication": "認証",
       "text": "テキスト",
-      "type": "タイプ:",
+      "type": "タイプ",
       "uri": "ログイン",
-      "username": "ユーザ名",
-      "value": "バリュー",
+      "username": "ユーザー名",
+      "value": "値",
       "browse": "ブラウザ",
       "browser": "ブラウザ",
       "cancel": "キャンセル",
@@ -38,20 +38,20 @@
       "features": "特徴:",
       "generate": "生成する",
       "icon": "アイコン",
-      "name": "お名前 (必須)",
+      "name": "名前",
       "namespace": "名前空間",
       "password": "パスワード",
       "path": "パス",
       "properties": "プロパティ",
-      "search": "インフォメーション"
+      "search": "検索"
     },
     "hotkey": {
       "focusInscription": "焦点の徴候({{hotkey}})",
-      "focusMain": "焦点の本管({{hotkey}})",
-      "focusToolbar": "焦点のツールバー({{hotkey}})",
+      "focusMain": "メインをフォーカス ({{hotkey}})",
+      "focusToolbar": "ツールバーをフォーカス ({{hotkey}})",
       "help": "オープンヘルプ({{hotkey}})",
-      "redo": "Redo ({{hotkey}})",
-      "undo": "Undo({{hotkey}})"
+      "redo": "やり直す ({{hotkey}})",
+      "undo": "元に戻す ({{hotkey}})"
     },
     "message": {
       "errorOccurred": "エラーが発生しました: {{message}}"
@@ -63,7 +63,7 @@
     "emptyName": "お名前を空にすることはできません.",
     "endpointInfoDescription": "最初の URL はデフォルトで、フォールバックのエンドポイントが続きます.",
     "errorOnly": "エラー: {{error}}",
-    "notFound": "お知らせ",
+    "notFound": "見つかりません",
     "serviceClassMissing": "まずはWSDLからWebサービスクライアントを生成し、エンドポイントを編集してください.",
     "webserviceAlreadyExists": "既にWebサービスが存在しています."
   },
@@ -90,7 +90,7 @@
     "moveUp": "移動する"
   },
   "title": {
-    "detail": "ウェブサービス",
+    "detail": "Web サービス",
     "main": "Webサービス - {{name}}"
   }
 }
