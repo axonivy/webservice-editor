@@ -88,6 +88,7 @@ test('generate service', async ({ page }) => {
   const dialog = await editor.main.openGenerateServiceDialog();
   await dialog.fileInput.fill('http://example.com/service?wsdl');
   await expect(dialog.namespaceInput).toBeEnabled();
+  await dialog.namespaceInput.fill('com.example.service.client');
   await expect(dialog.underscoreOption).toBeEnabled();
 
   const msg = consoleLog(page);
@@ -96,6 +97,7 @@ test('generate service', async ({ page }) => {
   expect(await msg).toContain('"actionId":"generateCxfClient"');
   expect(await msg).toContain('\\"clientName\\":\\"personService\\"');
   expect(await msg).toContain('\\"wsdlUrl\\":\\"http://example.com/service?wsdl\\"');
+  expect(await msg).toContain('\\"namespace\\":\\"com.example.service.client\\"');
 });
 
 const consoleLog = async (page: Page) => {
