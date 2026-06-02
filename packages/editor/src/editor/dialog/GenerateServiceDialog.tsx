@@ -50,7 +50,7 @@ const GenerateDialogContent = () => {
   const selectedClient = data[selectedIndex];
   const initCodegen: WsCodegenOpts = selectedClient?.codegen ?? {
     wsdlUrl: '',
-    namespaceMappings: {},
+    namespace: '',
     underscoreNames: false
   };
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -127,13 +127,12 @@ const GenerateDialogContent = () => {
         <BasicField label={t('common.label.namespace')}>
           <BasicInput
             disabled={!codegen.wsdlUrl}
-            value={Object.values(codegen.namespaceMappings)[0] ?? ''}
+            value={codegen.namespace}
             required
             onChange={event => {
-              const namespaceMappings: WsCodegenOpts['namespaceMappings'] = event.target.value ? { '': event.target.value } : {};
               setCodegen(prev => ({
                 ...prev,
-                namespaceMappings
+                namespace: event.target.value
               }));
             }}
           />

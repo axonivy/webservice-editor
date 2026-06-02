@@ -14,7 +14,7 @@ export const data: Array<WebServiceData> = [
     codegen: {
       wsdlUrl: 'http://127.0.0.1:8081/designer/ws/connectivity-demos/16150E1D07E8CA18?WSDL',
       underscoreNames: false,
-      namespaceMappings: {}
+      namespace: ''
     },
     service: {
       serviceClass: 'com.axonivy.connectivity.soap.service.client.PersonServiceService',
@@ -33,7 +33,7 @@ export const data: Array<WebServiceData> = [
     codegen: {
       wsdlUrl: 'http://localhost:8081/designer/ws/connectivity-demos/162B95BB70C3178E?WSDL',
       underscoreNames: false,
-      namespaceMappings: {}
+      namespace: ''
     },
     service: {
       serviceClass: 'com.axonivy.connectivity.client.TechnicalBackendServiceService',
@@ -56,7 +56,7 @@ export const data: Array<WebServiceData> = [
     codegen: {
       wsdlUrl: 'http://secure.smartbearsoftware.com/samples/testcomplete12/webservices/Service.asmx?WSDL',
       underscoreNames: false,
-      namespaceMappings: {}
+      namespace: ''
     },
     service: {
       serviceClass: 'com.smartbear.sample.test.client.SampleWebService',
@@ -84,7 +84,7 @@ export const data: Array<WebServiceData> = [
     codegen: {
       wsdlUrl: 'http://localhost:8081/designer/ws/connectivity-demos/16D29AE50A7A6E34?WSDL',
       underscoreNames: false,
-      namespaceMappings: {}
+      namespace: ''
     },
     service: {
       serviceClass: 'com.axonivy.connectivity.soap.interceptor.client.ServiceWithExceptionService',
@@ -113,7 +113,7 @@ export const data: Array<WebServiceData> = [
     codegen: {
       wsdlUrl: 'http://127.0.0.1:8081/designer/ws/connectivity-demos/16150E1D07E8CA18?WSDL',
       underscoreNames: false,
-      namespaceMappings: {}
+      namespace: ''
     },
     service: {
       serviceClass: 'soap.intercepted.client.person.ivyteam.ch.client.PersonServiceService',

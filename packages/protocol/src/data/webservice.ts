@@ -12,11 +12,13 @@ export interface Webservices {
   boolean: boolean;
   editorFileContent: EditorFileContent;
   javaType: JavaType[];
+  uri: string;
   validationResult: ValidationResult[];
   webServiceContext: WebServiceContext;
   webServiceEditorData: WebServiceEditorData;
   webServiceIcon: WebServiceIcon[];
   webServiceSaveDataArgs: WebServiceSaveDataArgs;
+  wsdlSpec: WsdlSpec;
   wsPropertyMeta: WsPropertyMeta[];
   [k: string]: unknown;
 }
@@ -55,12 +57,9 @@ export interface WebServiceData {
   service: WsService;
 }
 export interface WsCodegenOpts {
-  namespaceMappings: MapStringString;
+  namespace: string;
   underscoreNames: boolean;
   wsdlUrl: string;
-}
-export interface MapStringString {
-  [k: string]: string;
 }
 export interface WsClientProperty {
   key: string;
@@ -85,6 +84,9 @@ export interface WebServiceSaveDataArgs {
   context: WebServiceContext;
   data: WebServiceData[];
   directSave: boolean;
+}
+export interface WsdlSpec {
+  namespaces: string[];
 }
 export interface WsPropertyMeta {
   defaultValue: string;

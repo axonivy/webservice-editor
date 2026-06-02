@@ -72,7 +72,7 @@ const AddDialogContent = ({ table, closeDialog }: { table: Table<WebServiceData>
         icon: '',
         features: [],
         properties: [],
-        codegen: { wsdlUrl: '', underscoreNames: false, namespaceMappings: {} },
+        codegen: { wsdlUrl: '', underscoreNames: false, namespace: '' },
         service: { serviceClass: '', ports: [{ name: '', locationUri: '', fallbackLocationUris: [] }] }
       }
     ]);

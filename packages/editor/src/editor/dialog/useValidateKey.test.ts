@@ -10,7 +10,7 @@ const data: Array<WebServiceData> = [
     key: 'Employee',
     features: [],
     properties: [],
-    codegen: { wsdlUrl: '', underscoreNames: false, namespaceMappings: {} },
+    codegen: { wsdlUrl: '', underscoreNames: false, namespace: '' },
     service: { serviceClass: '', ports: [{ name: '', locationUri: '', fallbackLocationUris: [] }] }
   },
   {
@@ -20,7 +20,7 @@ const data: Array<WebServiceData> = [
     key: 'Teamleader',
     features: [],
     properties: [],
-    codegen: { wsdlUrl: '', underscoreNames: false, namespaceMappings: {} },
+    codegen: { wsdlUrl: '', underscoreNames: false, namespace: '' },
     service: { serviceClass: '', ports: [{ name: '', locationUri: '', fallbackLocationUris: [] }] }
   }
 ];
