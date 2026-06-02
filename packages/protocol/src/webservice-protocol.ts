@@ -8,6 +8,7 @@ import type {
   WebServiceIcon,
   WebServiceSaveDataArgs,
   WsCodegenOpts,
+  WsdlSpec,
   WsPropertyMeta
 } from './data/webservice';
 
@@ -25,6 +26,7 @@ export interface WebServiceMetaRequestTypes {
   'meta/properties/all': [void, Array<WsPropertyMeta>];
   'meta/features/all': [WebServiceContext, Array<JavaType>];
   'meta/icons/all': [WebServiceContext, Array<WebServiceIcon>];
+  'meta/wsdl/load': [string, WsdlSpec];
 }
 
 export interface WebServiceRequestTypes extends WebServiceMetaRequestTypes {

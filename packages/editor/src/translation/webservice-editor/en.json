@@ -21,6 +21,7 @@
       "icon": "Icon",
       "info": "Info",
       "key": "Key",
+      "loading": "Loading...",
       "name": "Name",
       "namespace": "Namespace",
       "password": "Password",
