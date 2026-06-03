@@ -8,6 +8,7 @@ import {
   DialogContent,
   DialogTrigger,
   Flex,
+  Spinner,
   Tooltip,
   TooltipContent,
   TooltipProvider,
@@ -20,8 +21,24 @@ import { useRef, useState, type ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAppContext } from '../../context/AppContext';
 import { useAction } from '../../hooks/useAction';
+import { useMeta } from '../../hooks/useMeta';
 
 const DIALOG_HOTKEY_IDS = ['generateServiceDialog'];
+
+export const namespaceToJavaPackage = (value: string) => {
+  const withoutScheme = value.replace(/^[a-z][a-z0-9+.-]*:(?:\/\/)?/i, '').trim();
+  if (!withoutScheme) {
+    return '';
+  }
+  const packageName = withoutScheme
+    .replace(/\/$/, '')
+    .split('.')
+    .map(part => part.trim())
+    .filter(Boolean)
+    .reverse()
+    .join('.');
+  return `${packageName}.client`;
+};
 
 export const GenerateServiceDialog = ({ children }: { children: ReactNode }) => {
   const { t } = useTranslation();
@@ -55,6 +72,8 @@ const GenerateDialogContent = () => {
   };
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [codegen, setCodegen] = useState<WsCodegenOpts>(initCodegen);
+  const wsdlSpec = useMeta('meta/wsdl/load', codegen.wsdlUrl, { disable: !codegen.wsdlUrl });
+  const selectedNamespace = namespaceToJavaPackage(wsdlSpec.data?.namespaces?.[0] ?? '');
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -69,9 +88,14 @@ const GenerateDialogContent = () => {
       return;
     }
 
+    const wsCodegen = {
+      ...codegen,
+      namespace: codegen.namespace.trim() ? codegen.namespace : selectedNamespace
+    };
+
     generateCxfClient({
       clientName: currentClient.name,
-      ...codegen
+      ...wsCodegen
     });
 
     setData(currentData =>
@@ -79,7 +103,7 @@ const GenerateDialogContent = () => {
         index === selectedIndex
           ? {
               ...client,
-              codegen
+              codegen: wsCodegen
             }
           : client
       )
@@ -94,7 +118,7 @@ const GenerateDialogContent = () => {
         <Button
           variant='primary'
           size='large'
-          disabled={!codegen.wsdlUrl.trim()}
+          disabled={!wsdlSpec.data?.namespaces?.length}
           icon={IvyIcons.SettingsCog}
           aria-label={t('common.label.generate')}
           onClick={generate}
@@ -120,14 +144,22 @@ const GenerateDialogContent = () => {
             />
           }
           label={t('dialog.generateService.wsdlUri')}
+          message={wsdlSpec.isError ? { variant: 'error', message: wsdlSpec.error.message } : undefined}
         >
           <input ref={fileInputRef} accept='.wsdl,.xml' type='file' onChange={handleFileChange} hidden />
           <BasicInput value={codegen.wsdlUrl} required onChange={event => setCodegen(prev => ({ ...prev, wsdlUrl: event.target.value }))} />
         </BasicField>
+        {codegen.wsdlUrl && wsdlSpec.isPending && (
+          <Flex direction='row' gap={1}>
+            <Spinner size='small' />
+            {t('common.label.loading')}
+          </Flex>
+        )}
         <BasicField label={t('common.label.namespace')}>
           <BasicInput
             disabled={!codegen.wsdlUrl}
             value={codegen.namespace}
+            placeholder={selectedNamespace}
             required
             onChange={event => {
               setCodegen(prev => ({

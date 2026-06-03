@@ -88,6 +88,7 @@ test('generate service', async ({ page }) => {
   const dialog = await editor.main.openGenerateServiceDialog();
   await dialog.fileInput.fill('http://example.com/service?wsdl');
   await expect(dialog.namespaceInput).toBeEnabled();
+  await expect(dialog.namespaceInput).toHaveAttribute('placeholder', 'ch.ivyteam.test.ws.client');
   await dialog.namespaceInput.fill('com.example.service.client');
   await expect(dialog.underscoreOption).toBeEnabled();
 

@@ -23,6 +23,7 @@
     "label": {
       "info": "情報",
       "key": "キーキー",
+      "loading": "読み込み中...",
       "apply": "適用",
       "authentication": "認証",
       "text": "テキスト",

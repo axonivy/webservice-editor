@@ -34,3 +34,7 @@ export const META_FEATURES = [
 export const META_ICONS = [
   { name: 'microsoft', path: '/icons/microsoft.svg', relativePath: 'res:/webContent/icons/microsoft.svg' }
 ] as const satisfies WebServiceIcon[];
+
+export const META_WSDL_SPEC = {
+  namespaces: ['urn:ws.test.ivyteam.ch']
+};
