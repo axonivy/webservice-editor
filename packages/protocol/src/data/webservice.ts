@@ -12,7 +12,7 @@ export interface Webservices {
   boolean: boolean;
   editorFileContent: EditorFileContent;
   javaType: JavaType[];
-  uri: string;
+  loadWsdlRequest: LoadWsdlRequest;
   validationResult: ValidationResult[];
   webServiceContext: WebServiceContext;
   webServiceEditorData: WebServiceEditorData;
@@ -30,15 +30,19 @@ export interface JavaType {
   packageName: string;
   simpleName: string;
 }
-export interface ValidationResult {
-  message: string;
-  path: string;
-  severity: Severity;
+export interface LoadWsdlRequest {
+  context: WebServiceContext;
+  wsdlResource: string;
 }
 export interface WebServiceContext {
   app: string;
   file: string;
   pmv: string;
+}
+export interface ValidationResult {
+  message: string;
+  path: string;
+  severity: Severity;
 }
 export interface WebServiceEditorData {
   context: WebServiceContext;
