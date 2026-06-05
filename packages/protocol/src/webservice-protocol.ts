@@ -14,13 +14,24 @@ import type {
 } from './data/webservice';
 
 export interface WebServiceActionArgs {
-  actionId: 'openUrl' | 'generateCxfClient';
+  actionId: 'openUrl';
   context: WebServiceContext;
-  payload: string | WsGeneratorConfig;
+  payload: string;
 }
 
 export interface WsGeneratorConfig extends WsCodegenOpts {
+  context: WebServiceContext;
   clientName: string;
+}
+
+export interface WsInfo {
+  service: string;
+  ports: Record<string, string>;
+}
+
+export interface WsGeneratorResult extends WsInfo {
+  success: boolean;
+  message: string;
 }
 
 export interface WebServiceMetaRequestTypes {
@@ -30,7 +41,11 @@ export interface WebServiceMetaRequestTypes {
   'meta/wsdl/load': [LoadWsdlRequest, WsdlSpec];
 }
 
-export interface WebServiceRequestTypes extends WebServiceMetaRequestTypes {
+export interface WebServiceVscExtensionTypes {
+  'integration/generate': [WsGeneratorConfig, WsGeneratorResult];
+}
+
+export interface WebServiceRequestTypes extends WebServiceMetaRequestTypes, WebServiceVscExtensionTypes {
   initialize: [WebServiceContext, void];
   data: [WebServiceContext, WebServiceEditorData];
   saveData: [WebServiceSaveDataArgs, EditorFileContent];
