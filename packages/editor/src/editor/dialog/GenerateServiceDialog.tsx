@@ -62,7 +62,7 @@ export const GenerateServiceDialog = ({ children }: { children: ReactNode }) => 
 
 const GenerateDialogContent = () => {
   const { t } = useTranslation();
-  const { data, setData, selectedIndex } = useAppContext();
+  const { data, setData, selectedIndex, context } = useAppContext();
   const generateCxfClient = useAction('generateCxfClient');
   const selectedClient = data[selectedIndex];
   const initCodegen: WsCodegenOpts = selectedClient?.codegen ?? {
@@ -72,7 +72,7 @@ const GenerateDialogContent = () => {
   };
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [codegen, setCodegen] = useState<WsCodegenOpts>(initCodegen);
-  const wsdlSpec = useMeta('meta/wsdl/load', codegen.wsdlUrl, { disable: !codegen.wsdlUrl });
+  const wsdlSpec = useMeta('meta/wsdl/load', { context, wsdlResource: codegen.wsdlUrl }, { disable: !codegen.wsdlUrl });
   const selectedNamespace = namespaceToJavaPackage(wsdlSpec.data?.namespaces?.[0] ?? '');
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {

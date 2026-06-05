@@ -2,6 +2,7 @@
 import type {
   EditorFileContent,
   JavaType,
+  LoadWsdlRequest,
   ValidationResult,
   WebServiceContext,
   WebServiceEditorData,
@@ -26,7 +27,7 @@ export interface WebServiceMetaRequestTypes {
   'meta/properties/all': [void, Array<WsPropertyMeta>];
   'meta/features/all': [WebServiceContext, Array<JavaType>];
   'meta/icons/all': [WebServiceContext, Array<WebServiceIcon>];
-  'meta/wsdl/load': [string, WsdlSpec];
+  'meta/wsdl/load': [LoadWsdlRequest, WsdlSpec];
 }
 
 export interface WebServiceRequestTypes extends WebServiceMetaRequestTypes {
