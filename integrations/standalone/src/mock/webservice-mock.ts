@@ -6,11 +6,13 @@ import type {
   WebServiceClient,
   WebServiceEditorData,
   WebServiceMetaRequestTypes,
-  WebServiceSaveDataArgs
+  WebServiceSaveDataArgs,
+  WebServiceVscExtensionTypes
 } from '@axonivy/webservice-editor-protocol';
 import { data } from './data-mock';
 import { META_FEATURES, META_ICONS, META_PROPS, META_WSDL_SPEC } from './meta.mock';
 import { validateMock } from './validation-mock';
+import { VSC_GENERATE_RESULT } from './vsc.mock';
 
 export class WebServiceMock implements WebServiceClient {
   private webserviceData: WebServiceEditorData;
@@ -61,6 +63,27 @@ export class WebServiceMock implements WebServiceClient {
         return Promise.resolve(META_WSDL_SPEC);
       default:
         throw Error('mock meta path not programmed');
+    }
+  }
+
+  vsc<TVsc extends keyof WebServiceVscExtensionTypes>(
+    path: TVsc,
+    args: WebServiceVscExtensionTypes[TVsc][0]
+  ): Promise<WebServiceVscExtensionTypes[TVsc][1]> {
+    console.log('Vsc:', JSON.stringify(args));
+    switch (path) {
+      case 'integration/generate': {
+        return new Promise<WebServiceVscExtensionTypes[TVsc][1]>(resolve => {
+          setTimeout(() => {
+            resolve({
+              ...VSC_GENERATE_RESULT,
+              message: `Generated ${args?.clientName}.`
+            } as WebServiceVscExtensionTypes[TVsc][1]);
+          }, 500);
+        });
+      }
+      default:
+        throw Error('mock vsc path not programmed');
     }
   }
 

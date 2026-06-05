@@ -17,10 +17,11 @@ import {
 } from '@axonivy/ui-components';
 import { IvyIcons } from '@axonivy/ui-icons';
 import type { WsCodegenOpts } from '@axonivy/webservice-editor-protocol';
+import { useMutation } from '@tanstack/react-query';
 import { useRef, useState, type ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAppContext } from '../../context/AppContext';
-import { useAction } from '../../hooks/useAction';
+import { useClient } from '../../context/ClientContext';
 import { useMeta } from '../../hooks/useMeta';
 
 const DIALOG_HOTKEY_IDS = ['generateServiceDialog'];
@@ -54,16 +55,16 @@ export const GenerateServiceDialog = ({ children }: { children: ReactNode }) => 
         </Tooltip>
       </TooltipProvider>
       <DialogContent onCloseAutoFocus={e => e.preventDefault()}>
-        <GenerateDialogContent />
+        <GenerateDialogContent closeDialog={() => onOpenChange(false)} />
       </DialogContent>
     </Dialog>
   );
 };
 
-const GenerateDialogContent = () => {
+const GenerateDialogContent = ({ closeDialog }: { closeDialog: () => void }) => {
   const { t } = useTranslation();
   const { data, setData, selectedIndex, context } = useAppContext();
-  const generateCxfClient = useAction('generateCxfClient');
+  const client = useClient();
   const selectedClient = data[selectedIndex];
   const initCodegen: WsCodegenOpts = selectedClient?.codegen ?? {
     wsdlUrl: '',
@@ -74,6 +75,38 @@ const GenerateDialogContent = () => {
   const [codegen, setCodegen] = useState<WsCodegenOpts>(initCodegen);
   const wsdlSpec = useMeta('meta/wsdl/load', { context, wsdlResource: codegen.wsdlUrl }, { disable: !codegen.wsdlUrl });
   const selectedNamespace = namespaceToJavaPackage(wsdlSpec.data?.namespaces?.[0] ?? '');
+  const generateMutation = useMutation({
+    mutationFn: (payload: { clientName: string; wsCodegen: WsCodegenOpts }) =>
+      client.vsc('integration/generate', {
+        context,
+        clientName: payload.clientName,
+        ...payload.wsCodegen
+      }),
+    onSuccess: (result, payload) => {
+      if (!result.success) {
+        return;
+      }
+      setData(currentData =>
+        currentData.map((clientData, index) =>
+          index === selectedIndex
+            ? {
+                ...clientData,
+                codegen: payload.wsCodegen,
+                service: {
+                  serviceClass: result.service,
+                  ports: Object.entries(result.ports).map(([name, locationUri]) => ({
+                    name,
+                    locationUri,
+                    fallbackLocationUris: []
+                  }))
+                }
+              }
+            : clientData
+        )
+      );
+      closeDialog();
+    }
+  });
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -82,7 +115,8 @@ const GenerateDialogContent = () => {
     }
   };
 
-  const generate = () => {
+  const generate = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
     const currentClient = data[selectedIndex];
     if (!currentClient || !codegen.wsdlUrl) {
       return;
@@ -93,21 +127,10 @@ const GenerateDialogContent = () => {
       namespace: codegen.namespace.trim() ? codegen.namespace : selectedNamespace
     };
 
-    generateCxfClient({
+    generateMutation.mutate({
       clientName: currentClient.name,
-      ...wsCodegen
+      wsCodegen
     });
-
-    setData(currentData =>
-      currentData.map((client, index) =>
-        index === selectedIndex
-          ? {
-              ...client,
-              codegen: wsCodegen
-            }
-          : client
-      )
-    );
   };
 
   return (
@@ -116,9 +139,10 @@ const GenerateDialogContent = () => {
       description={t('dialog.generateService.desc')}
       submit={
         <Button
+          type='button'
           variant='primary'
           size='large'
-          disabled={!wsdlSpec.data?.namespaces?.length}
+          disabled={!wsdlSpec.data?.namespaces?.length || generateMutation.isPending}
           icon={IvyIcons.SettingsCog}
           aria-label={t('common.label.generate')}
           onClick={generate}
@@ -149,7 +173,7 @@ const GenerateDialogContent = () => {
           <input ref={fileInputRef} accept='.wsdl,.xml' type='file' onChange={handleFileChange} hidden />
           <BasicInput value={codegen.wsdlUrl} required onChange={event => setCodegen(prev => ({ ...prev, wsdlUrl: event.target.value }))} />
         </BasicField>
-        {codegen.wsdlUrl && wsdlSpec.isPending && (
+        {codegen.wsdlUrl && (wsdlSpec.isPending || generateMutation.isPending) && (
           <Flex direction='row' gap={1}>
             <Spinner size='small' />
             {t('common.label.loading')}

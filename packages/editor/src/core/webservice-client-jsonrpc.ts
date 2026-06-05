@@ -19,7 +19,8 @@ import type {
   WebServiceNotificationTypes,
   WebServiceOnNotificationTypes,
   WebServiceRequestTypes,
-  WebServiceSaveDataArgs
+  WebServiceSaveDataArgs,
+  WebServiceVscExtensionTypes
 } from '@axonivy/webservice-editor-protocol';
 
 export class WebServiceClientJsonRpc extends BaseRpcClient implements WebServiceClient {
@@ -60,6 +61,13 @@ export class WebServiceClientJsonRpc extends BaseRpcClient implements WebService
     path: TMeta,
     args: WebServiceMetaRequestTypes[TMeta][0]
   ): Promise<WebServiceMetaRequestTypes[TMeta][1]> {
+    return this.sendRequest(path, args);
+  }
+
+  vsc<TVsc extends keyof WebServiceVscExtensionTypes>(
+    path: TVsc,
+    args: WebServiceVscExtensionTypes[TVsc][0]
+  ): Promise<WebServiceVscExtensionTypes[TVsc][1]> {
     return this.sendRequest(path, args);
   }
 

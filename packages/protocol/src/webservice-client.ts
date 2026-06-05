@@ -1,5 +1,11 @@
-import type { EditorFileContent, WebServiceContext, WebServiceEditorData, WebServiceSaveDataArgs, ValidationResult } from './data/webservice';
-import type { WebServiceActionArgs, WebServiceMetaRequestTypes } from './webservice-protocol';
+import type {
+  EditorFileContent,
+  ValidationResult,
+  WebServiceContext,
+  WebServiceEditorData,
+  WebServiceSaveDataArgs
+} from './data/webservice';
+import type { WebServiceActionArgs, WebServiceMetaRequestTypes, WebServiceVscExtensionTypes } from './webservice-protocol';
 
 export interface Event<T> {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -19,6 +25,11 @@ export interface WebServiceClient {
     path: TMeta,
     args: WebServiceMetaRequestTypes[TMeta][0]
   ): Promise<WebServiceMetaRequestTypes[TMeta][1]>;
+
+  vsc<TVsc extends keyof WebServiceVscExtensionTypes>(
+    path: TVsc,
+    args: WebServiceVscExtensionTypes[TVsc][0]
+  ): Promise<WebServiceVscExtensionTypes[TVsc][1]>;
 
   validate(context: WebServiceContext): Promise<ValidationResult[]>;
   action(action: WebServiceActionArgs): void;
