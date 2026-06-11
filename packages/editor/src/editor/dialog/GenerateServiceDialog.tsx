@@ -143,7 +143,8 @@ const GenerateDialogContent = ({ closeDialog }: { closeDialog: () => void }) => 
           variant='primary'
           size='large'
           disabled={!wsdlSpec.data?.namespaces?.length || generateMutation.isPending}
-          icon={IvyIcons.SettingsCog}
+          icon={generateMutation.isPending ? IvyIcons.Spinner : IvyIcons.SettingsCog}
+          spin={generateMutation.isPending}
           aria-label={t('common.label.generate')}
           onClick={generate}
         >
@@ -173,7 +174,7 @@ const GenerateDialogContent = ({ closeDialog }: { closeDialog: () => void }) => 
           <input ref={fileInputRef} accept='.wsdl,.xml' type='file' onChange={handleFileChange} hidden />
           <BasicInput value={codegen.wsdlUrl} required onChange={event => setCodegen(prev => ({ ...prev, wsdlUrl: event.target.value }))} />
         </BasicField>
-        {codegen.wsdlUrl && (wsdlSpec.isPending || generateMutation.isPending) && (
+        {codegen.wsdlUrl && wsdlSpec.isPending && (
           <Flex direction='row' gap={1}>
             <Spinner size='small' />
             {t('common.label.loading')}
