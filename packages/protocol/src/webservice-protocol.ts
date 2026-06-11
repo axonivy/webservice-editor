@@ -34,6 +34,11 @@ export interface WsGeneratorResult extends WsInfo {
   message: string;
 }
 
+export interface FilePickRequest {
+  context: WebServiceContext;
+  fileTypes: Record<string, string[]>;
+}
+
 export interface WebServiceMetaRequestTypes {
   'meta/properties/all': [void, Array<WsPropertyMeta>];
   'meta/features/all': [WebServiceContext, Array<JavaType>];
@@ -43,6 +48,7 @@ export interface WebServiceMetaRequestTypes {
 
 export interface WebServiceVscExtensionTypes {
   'integration/generate': [WsGeneratorConfig, WsGeneratorResult];
+  'integration/file/pick': [FilePickRequest, string | undefined];
 }
 
 export interface WebServiceRequestTypes extends WebServiceMetaRequestTypes, WebServiceVscExtensionTypes {
