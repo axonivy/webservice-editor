@@ -18,7 +18,7 @@ import {
 import { IvyIcons } from '@axonivy/ui-icons';
 import type { WsCodegenOpts } from '@axonivy/webservice-editor-protocol';
 import { useMutation } from '@tanstack/react-query';
-import { useRef, useState, type ReactNode } from 'react';
+import { useState, type ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAppContext } from '../../context/AppContext';
 import { useClient } from '../../context/ClientContext';
@@ -71,7 +71,6 @@ const GenerateDialogContent = ({ closeDialog }: { closeDialog: () => void }) => 
     namespace: '',
     underscoreNames: false
   };
-  const fileInputRef = useRef<HTMLInputElement>(null);
   const [codegen, setCodegen] = useState<WsCodegenOpts>(initCodegen);
   const wsdlSpec = useMeta('meta/wsdl/load', { context, wsdlResource: codegen.wsdlUrl }, { disable: !codegen.wsdlUrl });
   const selectedNamespace = namespaceToJavaPackage(wsdlSpec.data?.namespaces?.[0] ?? '');
@@ -108,10 +107,10 @@ const GenerateDialogContent = ({ closeDialog }: { closeDialog: () => void }) => 
     }
   });
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      setCodegen(prev => ({ ...prev, wsdlUrl: file.name }));
+  const browseWsdl = async () => {
+    const selectedPath = await client.vsc('integration/file/pick', { context, fileTypes: { WebService: ['wsdl', 'xml'] } });
+    if (selectedPath) {
+      setCodegen(prev => ({ ...prev, wsdlUrl: selectedPath }));
     }
   };
 
@@ -163,7 +162,7 @@ const GenerateDialogContent = ({ closeDialog }: { closeDialog: () => void }) => 
           control={
             <Button
               icon={IvyIcons.FolderOpen}
-              onClick={() => fileInputRef.current?.click()}
+              onClick={browseWsdl}
               title={t('common.label.browse')}
               aria-label={t('common.label.browse')}
             />
@@ -171,7 +170,6 @@ const GenerateDialogContent = ({ closeDialog }: { closeDialog: () => void }) => 
           label={t('dialog.generateService.wsdlUri')}
           message={wsdlSpec.isError ? { variant: 'error', message: wsdlSpec.error.message } : undefined}
         >
-          <input ref={fileInputRef} accept='.wsdl,.xml' type='file' onChange={handleFileChange} hidden />
           <BasicInput value={codegen.wsdlUrl} required onChange={event => setCodegen(prev => ({ ...prev, wsdlUrl: event.target.value }))} />
         </BasicField>
         {codegen.wsdlUrl && wsdlSpec.isPending && (

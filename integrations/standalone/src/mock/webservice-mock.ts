@@ -73,15 +73,18 @@ export class WebServiceMock implements WebServiceClient {
     console.log('Vsc:', JSON.stringify(args));
     switch (path) {
       case 'integration/generate': {
+        const generateArgs = args as WebServiceVscExtensionTypes['integration/generate'][0];
         return new Promise<WebServiceVscExtensionTypes[TVsc][1]>(resolve => {
           setTimeout(() => {
             resolve({
               ...VSC_GENERATE_RESULT,
-              message: `Generated ${args?.clientName}.`
+              message: `Generated ${generateArgs.clientName}.`
             } as WebServiceVscExtensionTypes[TVsc][1]);
           }, 500);
         });
       }
+      case 'integration/file/pick':
+        return Promise.resolve('/workspace/mock/service.wsdl') as Promise<WebServiceVscExtensionTypes[TVsc][1]>;
       default:
         throw Error('mock vsc path not programmed');
     }
