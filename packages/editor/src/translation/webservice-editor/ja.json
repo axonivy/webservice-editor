@@ -85,7 +85,7 @@
     "examples": "例:{{examples}}",
     "noWebServiceSelected": "ウェブサービスの選択なし",
     "ports": "ポート",
-    "removeRow": "行を削除",
+    "removeRow": "行を削除する",
     "webServices": "ウェブサービス",
     "moveDown": "移動ダウン",
     "moveUp": "移動する"
