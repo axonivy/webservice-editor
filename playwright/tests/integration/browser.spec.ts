@@ -84,5 +84,5 @@ test('properties apply', async ({ page }) => {
   await browser.table.expectToHaveRowCount(4);
   await browser.table.row(0).locator.click();
   await browser.view.getByRole('button', { name: 'Apply' }).click();
-  await editor.detail.properties.row(0).expectToHaveColumnValues('Text', 'javax.xml.ws.client.connectionTimeout', 'theBoss');
+  await editor.detail.properties.row(0).expectToHaveColumnValues('Text', 'jakarta.xml.ws.client.connectionTimeout', 'theBoss');
 });

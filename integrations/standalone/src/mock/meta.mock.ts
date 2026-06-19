@@ -2,7 +2,7 @@ import type { JavaType, WebServiceIcon, WsPropertyMeta } from '@axonivy/webservi
 
 export const META_PROPS = [
   {
-    property: 'javax.xml.ws.client.connectionTimeout',
+    property: 'jakarta.xml.ws.client.connectionTimeout',
     description:
       'Specifies the amount of time, in milliseconds, that the consumer will attempt to establish a connection before it times out.',
     defaultValue: '30000',
