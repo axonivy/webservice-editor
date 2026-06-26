@@ -77,7 +77,7 @@ export const AuthenticationPart = ({ webService, handleAttributeChange }: Authen
         </Field>
         <Field direction='row' alignItems='center' gap={2}>
           <RadioGroupItem value='ntlm' />
-          <Label>{t('label.authentication.ntlm')}</Label>
+          <Label>{t('label.authentication.ntlm')} ({t('label.deprecated')})</Label>
         </Field>
         <Field direction='row' alignItems='center' gap={2}>
           <RadioGroupItem value='ws-security' />

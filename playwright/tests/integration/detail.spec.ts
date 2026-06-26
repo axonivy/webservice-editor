@@ -38,7 +38,7 @@ test('edit authentication type', async ({ page }) => {
   await editor.detail.features.expectToHaveRowCount(1);
   await editor.detail.features.expectToHaveRowValues(['ch.ivyteam.ivy.webservice.exec.cxf.feature.HttpDigestAuthenticationFeature']);
 
-  await editor.detail.authenticationType.choose('NTLM');
+  await editor.detail.authenticationType.choose('NTLM (Deprecated)');
   await editor.detail.features.expectToHaveRowCount(1);
   await editor.detail.features.expectToHaveRowValues(['ch.ivyteam.ivy.webservice.exec.cxf.feature.NTLMAuthenticationFeature']);
 

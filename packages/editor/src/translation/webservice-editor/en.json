@@ -71,6 +71,7 @@
       "wsSecurity": "WS Security"
     },
     "defaultValue": "Default value: {{defaultValue}}",
+    "deprecated": "Deprecated",
     "endpoint": "Endpoint URI",
     "examples": "Examples: {{examples}}",
     "moveDown": "Move Down",
