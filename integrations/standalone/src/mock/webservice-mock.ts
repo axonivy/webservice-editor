@@ -18,7 +18,7 @@ export class WebServiceMock implements WebServiceClient {
   private webserviceData: WebServiceEditorData;
   constructor() {
     this.webserviceData = {
-      context: { app: 'mockApp', pmv: 'mockPmv', file: 'webservice-clients.yaml' },
+      context: { app: 'mockApp', project: 'mockproject', file: 'webservice-clients.yaml' },
       data: data,
       helpUrl: 'https://dev.axonivy.com',
       readonly: false
