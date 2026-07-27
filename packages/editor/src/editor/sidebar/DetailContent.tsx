@@ -1,4 +1,4 @@
-import { BasicCollapsible, BasicField, BasicInput, Combobox, Flex, PanelMessage, type MessageData } from '@axonivy/ui-components';
+import { BasicCollapsible, BasicCombobox, BasicField, BasicInput, Flex, PanelMessage, type MessageData } from '@axonivy/ui-components';
 import type { Severity, ValidationResult, WebServiceData } from '@axonivy/webservice-editor-protocol';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -49,16 +49,21 @@ export const DetailContent = () => {
               <div className='flex size-9.25 items-center justify-center rounded-sm border border-n200'>
                 {webservice.icon && <img src={iconOptions.find(option => option.value === webservice.icon)?.icon} className='size-6' />}
               </div>
-              <Combobox
-                itemRender={item => (
+              <BasicCombobox
+                items={iconOptions}
+                isItemEqualToValue={(itemValue, value) => itemValue.value === value.value}
+                itemRenderer={item => (
                   <Flex alignItems='center' gap={1}>
-                    <img src={item.icon} className='size-3' />
-                    <span>{item.label}</span>
+                    <img src={item.icon} alt={item.label} className='size-3' />
+                    <span className='truncate'>
+                      {item.label} ({item.value})
+                    </span>
                   </Flex>
                 )}
-                onChange={value => handleAttributeChange('icon', value)}
-                options={iconOptions}
-                value={webservice.icon}
+                itemToStringLabel={item => item.value}
+                value={iconOptions.find(item => item.value === webservice.icon)}
+                onValueChange={change => handleAttributeChange('icon', change?.value ?? '')}
+                className='w-full'
               />
             </Flex>
           </BasicField>
