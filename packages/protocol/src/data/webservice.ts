@@ -6,7 +6,7 @@
  */
 
 export type Severity = ("INFO" | "WARNING" | "ERROR")
-export type RestClientPropertyType = "STRING" | "PASSWORD";
+export type RestClientPropertyType = 'STRING' | 'PASSWORD';
 
 export interface Webservices {
   boolean: boolean;
@@ -37,7 +37,7 @@ export interface LoadWsdlRequest {
 export interface WebServiceContext {
   app: string;
   file: string;
-  pmv: string;
+  project: string;
 }
 export interface ValidationResult {
   message: string;

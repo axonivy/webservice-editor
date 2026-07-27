@@ -7,7 +7,7 @@ export const server = process.env.BASE_URL ?? 'localhost:8080/~Developer-webserv
 export const user = 'Developer';
 const ws = process.env.TEST_WS ?? '';
 const app = process.env.TEST_APP ?? 'Developer-webservice-test-project';
-const pmv = 'webservice-test-project';
+const project = 'webservice-test-project';
 
 export class WebServiceEditor {
   readonly page: Page;
@@ -25,7 +25,7 @@ export class WebServiceEditor {
 
   static async openWebService(page: Page, options?: { readonly?: boolean; theme?: string }) {
     const serverUrl = server.replace(/^https?:\/\//, '');
-    let url = `?server=${serverUrl}${ws}&app=${app}&pmv=${pmv}&file=config/webservice-clients.yaml`;
+    let url = `?server=${serverUrl}${ws}&app=${app}&project=${project}&file=config/webservice-clients.yaml`;
     if (options) {
       url += Object.entries(options)
         .map(([key, value]) => `&${key}=${value}`)
