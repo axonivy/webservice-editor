@@ -13,8 +13,8 @@ export default defineConfig({
   server: { port: 3000 },
   resolve: {
     alias: {
-      '@axonivy/webservice-editor': resolve(__dirname, '../../packages/editor/src'),
-      '@axonivy/webservice-editor-protocol': resolve(__dirname, '../../packages/protocol/src')
+      '@axonivy/webservice-editor': resolve(import.meta.dirname, '../../packages/editor/src'),
+      '@axonivy/webservice-editor-protocol': resolve(import.meta.dirname, '../../packages/protocol/src')
     }
   },
   base: './'
