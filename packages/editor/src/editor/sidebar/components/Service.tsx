@@ -4,6 +4,7 @@ import {
   BasicSelect,
   Button,
   ButtonGroup,
+  dataTableHelper,
   Flex,
   InputCell,
   Message,
@@ -19,7 +20,7 @@ import {
 } from '@axonivy/ui-components';
 import { IvyIcons } from '@axonivy/ui-icons';
 import type { WsPort, WsService } from '@axonivy/webservice-editor-protocol';
-import { flexRender, type ColumnDef } from '@tanstack/react-table';
+import { flexRender } from '@tanstack/react-table';
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useResizableEditableTable } from '../../../hooks/useResizableEditableTable';
@@ -67,6 +68,8 @@ type EndpointUrl = {
   url: string;
 };
 
+const { columnHelper } = dataTableHelper<EndpointUrl>();
+
 const EndpointTable = ({ port, onChange }: { port: WsPort; onChange: (change: WsPort) => void }) => {
   const { t } = useTranslation();
 
@@ -83,17 +86,17 @@ const EndpointTable = ({ port, onChange }: { port: WsPort; onChange: (change: Ws
     });
   };
 
-  const columns = useMemo<ColumnDef<EndpointUrl, string>[]>(
-    () => [
-      {
-        accessorKey: 'url',
+  const columns = useMemo(
+    () =>
+      columnHelper.columns([
+        columnHelper.accessor('url', {
         cell: cell => <InputCell cell={cell} />
-      }
-    ],
+        })
+      ]),
     []
   );
 
-  const { table, tableRef, setRowSelection, selectedRowActions, showAddButton, updateTableData } = useResizableEditableTable({
+  const { table, tableRef, selectedRowActions, showAddButton, updateTableData } = useResizableEditableTable({
     data: tableData,
     columns,
     onChange: onTableDataChange,
@@ -116,7 +119,7 @@ const EndpointTable = ({ port, onChange }: { port: WsPort; onChange: (change: Ws
         const newData = [...tableData];
         arraymove(newData, firstSelectedRow.index, firstSelectedRow.index - 1);
         updateTableData(newData);
-        setRowSelection({ [firstSelectedRow.index - 1]: true });
+        table.setRowSelection({ [firstSelectedRow.index - 1]: true });
       }
     };
     const moveDown: ButtonProps = {
@@ -130,7 +133,7 @@ const EndpointTable = ({ port, onChange }: { port: WsPort; onChange: (change: Ws
         const newData = [...tableData];
         arraymove(newData, firstSelectedRow.index, firstSelectedRow.index + 1);
         updateTableData(newData);
-        setRowSelection({ [firstSelectedRow.index + 1]: true });
+        table.setRowSelection({ [firstSelectedRow.index + 1]: true });
       }
     };
     return [moveUp, moveDown];
@@ -160,7 +163,7 @@ const EndpointTable = ({ port, onChange }: { port: WsPort; onChange: (change: Ws
             {table.getRowModel().rows.map(row => (
               <SelectRow key={row.id} row={row}>
                 {row.getVisibleCells().map(cell => (
-                  <TableCell key={cell.id} style={{ width: cell.column.getSize() }}>
+                  <TableCell key={cell.id} style={{ width: cell.column.getSize() }} onClick={cell.getSelectionStartHandler()}>
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </TableCell>
                 ))}
