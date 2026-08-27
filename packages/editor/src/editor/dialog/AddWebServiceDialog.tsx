@@ -15,6 +15,7 @@ import {
   TooltipTrigger,
   useDialogHotkeys,
   useHotkeys,
+  type DataTableFeatures,
   type MessageData
 } from '@axonivy/ui-components';
 import { IvyIcons } from '@axonivy/ui-icons';
@@ -28,7 +29,7 @@ import { useValidateKey } from './useValidateKey';
 
 const DIALOG_HOTKEY_IDS = ['addWebServiceDialog'];
 
-export const AddWebServiceDialog = ({ table, children }: { table: Table<WebServiceData>; children: ReactNode }) => {
+export const AddWebServiceDialog = ({ table, children }: { table: Table<DataTableFeatures, WebServiceData>; children: ReactNode }) => {
   const { open, onOpenChange } = useDialogHotkeys(DIALOG_HOTKEY_IDS);
   const { addWebService: shortcut } = useKnownHotkeys();
   useHotkeys(shortcut.hotkey, () => onOpenChange(true), { scopes: ['global'], keyup: true, enabled: !open });
@@ -49,7 +50,7 @@ export const AddWebServiceDialog = ({ table, children }: { table: Table<WebServi
   );
 };
 
-const AddDialogContent = ({ table, closeDialog }: { table: Table<WebServiceData>; closeDialog: () => void }) => {
+const AddDialogContent = ({ table, closeDialog }: { table: Table<DataTableFeatures, WebServiceData>; closeDialog: () => void }) => {
   const nameInputRef = useRef<HTMLInputElement>(null);
   const { t } = useTranslation();
   const { data, setData, setSelectedIndex } = useAppContext();

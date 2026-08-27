@@ -12,30 +12,29 @@ import {
   TooltipProvider,
   TooltipTrigger,
   useEditCell,
+  type DataTableFeatures,
   type InputProps
 } from '@axonivy/ui-components';
 import { IvyIcons } from '@axonivy/ui-icons';
-import { type CellContext } from '@tanstack/react-table';
+import { type CellContext, type RowData } from '@tanstack/react-table';
 import { useRef, useState } from 'react';
-import { useFocusWithin } from 'react-aria';
 import { useTranslation } from 'react-i18next';
 import { Browser, type BrowserType } from '../browser/Browser';
 
-type InputCellProps<TData> = InputProps & { cell: CellContext<TData, string>; activeBrowsers: Array<BrowserType> };
+type InputCellProps<TData extends RowData> = InputProps & {
+  cell: CellContext<DataTableFeatures, TData, string>;
+  activeBrowsers: Array<BrowserType>;
+};
 
-export const InputCellWithBrowser = <TData,>({ cell, activeBrowsers }: InputCellProps<TData>) => {
+export const InputCellWithBrowser = <TData extends RowData>({ cell, activeBrowsers }: InputCellProps<TData>) => {
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   const { value, setValue, onBlur, updateValue } = useEditCell(cell);
   const inputRef = useRef<HTMLInputElement>(null);
-  const [isFocusWithin, setIsFocusWithin] = useState(false);
-  const { focusWithinProps } = useFocusWithin({
-    onFocusWithinChange: setIsFocusWithin
-  });
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <InputGroup className='border-none! bg-transparent!' {...focusWithinProps}>
+      <InputGroup className='border-none! bg-transparent!'>
         <BasicInput
           ref={inputRef}
           value={value}
@@ -58,7 +57,7 @@ export const InputCellWithBrowser = <TData,>({ cell, activeBrowsers }: InputCell
             }
           }}
         />
-        {isFocusWithin && (
+        {cell.cell.getIsSelected() && (
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>

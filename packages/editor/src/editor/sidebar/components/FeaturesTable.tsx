@@ -1,5 +1,4 @@
-import { BasicCollapsible, SortableHeader, Table, TableBody, TableResizableHeader } from '@axonivy/ui-components';
-import { type ColumnDef } from '@tanstack/react-table';
+import { BasicCollapsible, dataTableHelper, SortableHeader, Table, TableBody, TableResizableHeader } from '@axonivy/ui-components';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useResizableEditableTable } from '../../../hooks/useResizableEditableTable';
@@ -14,6 +13,8 @@ type FeaturesTableProps = {
   validationPath: string;
 };
 
+const { columnHelper } = dataTableHelper<Feature>();
+
 export const FeaturesTable = ({ data, onChange, validationPath }: FeaturesTableProps) => {
   const { t } = useTranslation();
 
@@ -23,18 +24,18 @@ export const FeaturesTable = ({ data, onChange, validationPath }: FeaturesTableP
     onChange(changedData.map(d => d.class));
   };
 
-  const columns = useMemo<ColumnDef<Feature, string>[]>(
-    () => [
-      {
-        accessorKey: 'class',
+  const columns = useMemo(
+    () =>
+      columnHelper.columns([
+        columnHelper.accessor('class', {
         header: ({ column }) => <SortableHeader column={column} name={t('common.label.name')} />,
         cell: cell => <InputCellWithBrowser cell={cell} activeBrowsers={['FEATURES']} />
-      }
-    ],
+        })
+      ]),
     [t]
   );
 
-  const { table, tableRef, setRowSelection, selectedRowActions, showAddButton } = useResizableEditableTable({
+  const { table, tableRef, selectedRowActions, showAddButton } = useResizableEditableTable({
     data: tableData,
     columns,
     onChange: onTableDataChange,
@@ -45,7 +46,7 @@ export const FeaturesTable = ({ data, onChange, validationPath }: FeaturesTableP
     <BasicCollapsible label={t('common.label.features')} controls={selectedRowActions()}>
       <div>
         <Table ref={tableRef}>
-          <TableResizableHeader headerGroups={table.getHeaderGroups()} onClick={() => setRowSelection({})} />
+          <TableResizableHeader headerGroups={table.getHeaderGroups()} onClick={() => table.setRowSelection({})} />
           <TableBody>
             {table.getRowModel().rows.map(row => (
               <ValidationRow key={row.id} row={row} validationPath={`${validationPath}.features.${row.original.class}`} />
