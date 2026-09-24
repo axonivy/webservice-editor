@@ -24,6 +24,10 @@
       <groupId>com.axonivy.ivy.api</groupId>
       <artifactId>ivy-api</artifactId>
     </dependency>
+    <dependency>
+      <groupId>com.axonivy.ivy.api.extension</groupId>
+      <artifactId>ivy-webservice-cxf-extension-api</artifactId>
+    </dependency>
   </dependencies>
   <repositories>
     <repository>
