@@ -39,6 +39,8 @@ const initTranslation = () => {
   });
 };
 
+const queryClient = new QueryClient();
+
 const ContextHelper = ({ appContext, readonly, children }: ContextHelperProps & { children: ReactNode }) => {
   const data = appContext?.data ?? ([] as Array<WebServiceData>);
   const client: ClientContext = {
@@ -52,7 +54,6 @@ const ContextHelper = ({ appContext, readonly, children }: ContextHelperProps & 
       }
     }
   };
-  const queryClient = new QueryClient();
   initTranslation();
   return (
     <ClientContextProvider client={client.client}>
