@@ -88,7 +88,8 @@
     "removeRow": "行を削除する",
     "webServices": "ウェブサービス",
     "moveDown": "移動ダウン",
-    "moveUp": "移動する"
+    "moveUp": "移動する",
+    "deprecated": "廃止予定"
   },
   "title": {
     "detail": "Web サービス",
