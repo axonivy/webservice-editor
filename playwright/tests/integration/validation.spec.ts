@@ -6,7 +6,19 @@ test('table', async ({ page }) => {
   const dialog = await editor.main.openAddWebServiceDialog();
   await dialog.name.locator.fill('invalid-client');
   await dialog.create.click();
-  await expect(editor.main.table.locator.locator('.ui-message-row').first()).toHaveText('WebService invalid-client contains invalid characters');
+  const validationRows = editor.main.table.locator.locator('.ui-message-row');
+  await expect(validationRows.first()).toHaveText('WebService invalid-client contains invalid characters');
+  const referenceButton = validationRows.nth(0).getByRole('button', { name: 'WS-001' });
+  await expect(referenceButton).toBeVisible();
+  await expect(validationRows.nth(1).getByRole('button', { name: 'WS-002' })).toHaveCount(0);
+
+  const actionLog = page.waitForEvent('console', {
+    predicate: message => message.type() === 'log' && message.text().includes('"actionId":"openUrl"')
+  });
+  await referenceButton.click();
+  const action = await actionLog;
+  expect(action.text()).toContain('"actionId":"openUrl"');
+  expect(action.text()).toContain('https://dev.axonivy.com/docs/validation/WS-001');
 });
 
 test('detail', async ({ page }) => {
@@ -16,7 +28,9 @@ test('detail', async ({ page }) => {
   await dialog.create.click();
   await editor.main.table.lastRow().locator.click();
 
-  await (await editor.detail.key.message()).expectToBeError('WebService invalid-client contains invalid characters');
+  const keyMessage = await editor.detail.key.message();
+  await keyMessage.expectToBeError('WebService invalid-client contains invalid characters');
+  await expect(keyMessage.locator.getByRole('button', { name: 'WS-001' })).toBeVisible();
   await editor.detail.featuresSection.open();
   await editor.detail.features.expectToHaveRowCount(0);
   const row = await editor.detail.features.addRow();
