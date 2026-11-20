@@ -17,9 +17,9 @@ const renderValidations = (path: string) => {
 };
 
 const validations: Array<ValidationResult> = [
-  { message: 'message0', path: 'Employee.key', severity: 'INFO' },
-  { message: 'message1', path: 'Teamleader.features.test', severity: 'INFO' },
-  { message: 'message2', path: 'Teamleader', severity: 'WARNING' },
-  { message: 'message3', path: 'Teamleader', severity: 'ERROR' },
-  { message: 'message4', path: 'Manager', severity: 'INFO' }
+  { message: 'message0', path: 'Employee.key', severity: 'INFO', code: '', url: '' },
+  { message: 'message1', path: 'Teamleader.features.test', severity: 'INFO', code: '', url: '' },
+  { message: 'message2', path: 'Teamleader', severity: 'WARNING', code: '', url: '' },
+  { message: 'message3', path: 'Teamleader', severity: 'ERROR', code: '', url: '' },
+  { message: 'message4', path: 'Manager', severity: 'INFO', code: '', url: '' }
 ];

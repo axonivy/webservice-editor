@@ -3,6 +3,7 @@ import type { Severity, ValidationResult, WebServiceData } from '@axonivy/webser
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAppContext } from '../../context/AppContext';
+import { useAction } from '../../hooks/useAction';
 import { useMeta } from '../../hooks/useMeta';
 import { useValidations } from '../../hooks/useValidation';
 import { AuthenticationPart } from './AuthenticationPart';
@@ -13,6 +14,7 @@ import { Service } from './components/Service';
 export const DetailContent = () => {
   const { t } = useTranslation();
   const { data, setData, selectedIndex, context } = useAppContext();
+  const openUrl = useAction('openUrl');
   const webservice = useMemo(() => data[selectedIndex], [data, selectedIndex]);
   const validations = useValidations(webservice?.key ?? '');
   const iconMeta = useMeta('meta/icons/all', context);
@@ -28,7 +30,7 @@ export const DetailContent = () => {
       return structuredClone(old);
     });
 
-  const keyMessage = fieldMessage(validations, webservice, 'key');
+  const keyMessage = fieldMessage(validations, webservice, 'key', openUrl);
   const iconOptions = iconMeta.data?.map(icon => ({ icon: icon.path, label: icon.name, value: icon.relativePath })) ?? [];
 
   return (
@@ -80,7 +82,16 @@ export const DetailContent = () => {
   );
 };
 
-const fieldMessage = (validations: Array<ValidationResult>, webservice: WebServiceData, field: keyof WebServiceData) =>
+const fieldMessage = (
+  validations: Array<ValidationResult>,
+  webservice: WebServiceData,
+  field: keyof WebServiceData,
+  openUrl: (url: string) => void
+) =>
   validations
     .filter(v => v.path.toLowerCase().startsWith(`${webservice.key}.${field}`.toLowerCase()))
-    .map<MessageData>(v => ({ message: v.message, variant: v.severity.toLowerCase() as Lowercase<Severity> }))[0];
+    .map<MessageData>(v => ({
+      message: v.message,
+      variant: v.severity.toLowerCase() as Lowercase<Severity>,
+      reference: { tooltip: v.code, openUrl: () => openUrl(v.url) }
+    }))[0];

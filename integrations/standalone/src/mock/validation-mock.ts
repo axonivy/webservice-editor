@@ -8,17 +8,23 @@ export const validateMock = (data: Array<WebServiceData>): Array<ValidationResul
         {
           path: `${webService.key}.key`,
           message: `WebService ${webService.key} contains invalid characters`,
-          severity: 'ERROR'
+          severity: 'ERROR',
+          code: 'WS-001',
+          url: 'https://dev.axonivy.com/docs/validation/WS-001'
         },
         {
           path: `${webService.key}.uri`,
           message: 'URI empty',
-          severity: 'ERROR'
+          severity: 'ERROR',
+          code: 'WS-002',
+          url: 'https://dev.axonivy.com/docs/validation/WS-002'
         },
         {
           path: `${webService.key}.features.bla`,
           message: 'Features unknown',
-          severity: 'WARNING'
+          severity: 'WARNING',
+          code: 'WS-003',
+          url: 'https://dev.axonivy.com/docs/validation/WS-003'
         }
       );
     }
