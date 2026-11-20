@@ -17,14 +17,14 @@ export const validateMock = (data: Array<WebServiceData>): Array<ValidationResul
           message: 'URI empty',
           severity: 'ERROR',
           code: 'WS-002',
-          url: ''
+          url: 'https://dev.axonivy.com/docs/validation/WS-002'
         },
         {
           path: `${webService.key}.features.bla`,
           message: 'Features unknown',
           severity: 'WARNING',
           code: 'WS-003',
-          url: ''
+          url: 'https://dev.axonivy.com/docs/validation/WS-003'
         }
       );
     }

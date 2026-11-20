@@ -10,7 +10,6 @@ test('table', async ({ page }) => {
   await expect(validationRows.first()).toHaveText('WebService invalid-client contains invalid characters');
   const referenceButton = validationRows.nth(0).getByRole('button', { name: 'WS-001' });
   await expect(referenceButton).toBeVisible();
-  await expect(validationRows.nth(1).getByRole('button', { name: 'WS-002' })).toHaveCount(0);
 
   const actionLog = page.waitForEvent('console', {
     predicate: message => message.type() === 'log' && message.text().includes('"actionId":"openUrl"')

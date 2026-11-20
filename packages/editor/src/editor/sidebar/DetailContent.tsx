@@ -93,5 +93,5 @@ const fieldMessage = (
     .map<MessageData>(v => ({
       message: v.message,
       variant: v.severity.toLowerCase() as Lowercase<Severity>,
-      reference: v.url ? { tooltip: v.code, openUrl: () => openUrl(v.url) } : undefined
+      reference: { tooltip: v.code, openUrl: () => openUrl(v.url) }
     }))[0];
